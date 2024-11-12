@@ -79,9 +79,8 @@
             color:#ccc;
         }
         .today{
-
-            color:white;
-
+            color:red;
+            font-weight: bold;
         }
 
 
@@ -131,20 +130,20 @@ if($month+1>12){
 
 
 <?php
-for($m=1;$m<=12;$m++){
+for($whichMonth=1;$whichMonth<=12;$whichMonth++){
 ?>
 
-<div class="per_month"><a href="./calendar_pra.php" style="text-decoration: none; color: inherit;">
+<div class="per_month"><a href="calendar_pra.php?year=<?=$year;?>&month=<?=$whichMonth;?>" style="text-decoration: none; color: inherit;">
 <table>
 
 <div>
-<h2 class="month"><?php echo $m?></h2>
+<h2 class="month"><?php echo $whichMonth?></h2>
 </div>
 
 <?php
 
 
-$firstDay="{$year}-{$m}-1";
+$firstDay="{$year}-{$whichMonth}-1";
 $firstDay_stamp=strtotime($firstDay);
 
 $week_firstDay=date("N", $firstDay_stamp);
