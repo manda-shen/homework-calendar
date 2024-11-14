@@ -39,25 +39,15 @@
         border: 1px solid white;
         background: white;
     }
+    .main{
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+    }
+
 
 </style>
 
-
-<ul>
-    <li>有上個月下個月的按鈕</li>
-    <li>萬年曆都在同一個頁面同一個檔案</li>
-    <li>有前年和明年的按鈕</li>
-</ul>
-
-
-
-
-<?php 
-
-?>
-
-
-<table>
 
 <?php
 
@@ -111,35 +101,45 @@ $holidays = [
 
 ?>
 
+<div>
 <h3><?php echo date("{$year}年{$month}月") ?></h3>
+</div>
 
-    <tr class='nav'>
-        <td colspan=3 style='text-align:left'>
-            <a href="calendar_pra.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>&nbsp;
-            <a href="calendar_pra.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">上個月</a>&nbsp;&nbsp;&nbsp;
-        </td>
-        <!-- <td></td> -->
-        <!-- <td></td> -->
-        <td  style='text-align:center'>
-            <a href="./calendar_pra.php">本月</a>&nbsp;&nbsp;&nbsp;
-        </td>
-        <td colspan=3 style='text-align:right'>
-            <a href="calendar_pra.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">下個月</a>&nbsp;
-            <a href="calendar_pra.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>    
-        </td>
-        <!-- <td></td> -->
-        <!-- <td></td> -->
-        </tr>    
+<div class="main">
+<div class="pre_post">
+    <a href="calendar_pra.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
+</div>
+
+<div> 
+<table>
+
+<tr class='nav'>
+    <td colspan=3 style='text-align:left'>
+        <a href="calendar_pra.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>&nbsp;
+        <a href="calendar_pra.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">上個月</a>&nbsp;&nbsp;&nbsp;
+    </td>
+    <!-- <td></td> -->
+    <!-- <td></td> -->
+    <td  style='text-align:center'>
+        <a href="./calendar_pra.php">本月</a>&nbsp;&nbsp;&nbsp;
+    </td>
+    <td colspan=3 style='text-align:right'>
+        <a href="calendar_pra.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">下個月</a>&nbsp;
+        <a href="calendar_pra.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>    
+    </td>
+    <!-- <td></td> -->
+    <!-- <td></td> -->
+    </tr>    
 
 
 <tr>
-    <td>日</td>
-    <td>一</td>
-    <td>二</td>
-    <td>三</td>
-    <td>四</td>
-    <td>五</td>
-    <td>六</td>
+<td>日</td>
+<td>一</td>
+<td>二</td>
+<td>三</td>
+<td>四</td>
+<td>五</td>
+<td>六</td>
 </tr>
 
 <?php
@@ -152,30 +152,36 @@ $week_firstDay=date("N", $firstDay_stamp);
 $start_stamp=strtotime("-$week_firstDay days",$firstDay_stamp);
 
 for($i=0;$i<6;$i++){
-    echo "<tr>";
-    for($j=0;$j<7;$j++){
-        $isToday=(date("Y-m-d",$start_stamp)==date("Y-m-d"))?'today':'';
-        $theMonth=(date("m",$start_stamp)==date("m",$firstDay_stamp))?'':'grey-text';
-        $w=date("w", $start_stamp);
-        $isHoliday=($w==0 || $w==6)?'holiday':'';
-        echo "<td class='$theMonth $isToday $isHoliday'>";
-        echo date("j",$start_stamp);
+echo "<tr>";
+for($j=0;$j<7;$j++){
+    $isToday=(date("Y-m-d",$start_stamp)==date("Y-m-d"))?'today':'';
+    $theMonth=(date("m",$start_stamp)==date("m",$firstDay_stamp))?'':'grey-text';
+    $w=date("w", $start_stamp);
+    $isHoliday=($w==0 || $w==6)?'holiday':'';
+    echo "<td class='$theMonth $isToday $isHoliday'>";
+    echo date("j",$start_stamp);
 
-        if(isset($spDate[date("Y-m-d",$start_stamp)])){
-            echo "<br>{$spDate[date("Y-m-d",$start_stamp)]}";
-        }
-        if(isset($holidays[date("m-d",$start_stamp)])){
-            echo "<br>{$holidays[date("m-d",$start_stamp)]}";
-        }
-        $start_stamp=strtotime("+1 day", $start_stamp);
-
-        echo "</td>";
+    if(isset($spDate[date("Y-m-d",$start_stamp)])){
+        echo "<br>{$spDate[date("Y-m-d",$start_stamp)]}";
     }
-    echo "</tr>";
+    if(isset($holidays[date("m-d",$start_stamp)])){
+        echo "<br>{$holidays[date("m-d",$start_stamp)]}";
+    }
+    $start_stamp=strtotime("+1 day", $start_stamp);
+
+    echo "</td>";
+}
+echo "</tr>";
 }
 
 ?>
 </table>
+</div>
+
+<div class="pre_post">
+    <a href="calendar_pra.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
+</div>
+</div>
 
 </body>
 </html>
