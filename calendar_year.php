@@ -9,8 +9,23 @@
         * {
             box-sizing: border-box;
         }
+
+        body {
+            width: 100%;
+            margin: 0px;
+            background-image: url('./birdsinthewater.jpg'); /* 設置背景圖片 */
+            background-repeat: no-repeat; /* 防止背景圖片重複 */
+            background-position: top; /* 將背景圖片置於最上方 */
+            background-size: cover; /* 讓背景圖片覆蓋整個頁面 */
+        }
+
+        .title{
+            color: white;
+            text-align: center;
+        }
+
        .main{
-            width: 60%;
+            width: 80%;
             margin: auto;
             display: flex;
             flex-direction: row;
@@ -18,7 +33,25 @@
             align-items: center;
         }
 
+        .last_next{
+            width: 30px;
+            height: 30px;
+            font-size: 10px;
+            color: #ccc;
+            padding: 5px 8px 5px 8px;
+            border-radius: 10px;
+            border:0.1em solid rgba(0,0,0,0.1);
+            box-shadow:0.7px 1px 5px rgba(0,0,0,0.1);
+        }
+
+        .last_next:hover{
+            background-color: #E0ECEF;
+            color: white;
+            transition: 0.2s;
+        }
+
         .main_table{
+            width: 80%;
             background-color: white;
             padding:15px;
             padding-top:0px;
@@ -29,13 +62,15 @@
         }
 
         .main table{
-            width: 488px;
+            width: 100%;
             color: #000;
             border-collapse: collapse;
         }
 
         .main tr, 
         .main td {
+            width: 14%;
+            text-align: center; /* 文字水平置中 */
             padding-right:5px;
         }
 
@@ -47,16 +82,17 @@
         .spDate-class {
             color: pink;
             font-size: 12px
-
-}
+        }
 
         .box{
             margin:auto;
-            background-color: white;
+            background-color: rgba(255,255,255,0.3);
+            border-radius: 25px;
             width: 488px;
             display:flex;
             flex-wrap: wrap;
             padding: 20px 30px 40px;
+            margin-top: 30px;
         }
 
         /* 預設寬度(最小)為420px，以下設置其他寬度 */
@@ -129,8 +165,7 @@
 <body>
 
 <?php
-
-
+date_default_timezone_set("Asia/Taipei");
 
 if(isset($_GET['year'])){
     $year=$_GET['year'];
@@ -180,97 +215,92 @@ $holidays = [
 
 ?>
 
-<div>
-<h3><?php echo date("{$year}年{$month}月") ?></h3>
+<div class="title">
+    <h3>
+        <?php echo date("{$year}年{$month}月") ?>
+    </h3>
 </div>
 
 <div class="main">
-<div class="pre_post">
-    <a href="calendar_pra.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
+    <div class="last_next">
+        <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
+    </div>
+
+    <div class="main_table"> 
+        <table>
+            <tr class='nav'>
+                <td colspan=3 style='text-align:left'>
+                    <a href="calendar_year.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>&nbsp;
+                    <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">上個月</a>&nbsp;&nbsp;&nbsp;
+                </td>
+                <!-- <td></td> -->
+                <!-- <td></td> -->
+                <td  style='text-align:center'>
+                    <a href="./calendar_year.php">本月</a>&nbsp;&nbsp;&nbsp;
+                </td>
+                <td colspan=3 style='text-align:right'>
+                    <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">下個月</a>&nbsp;
+                    <a href="calendar_year.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>    
+                </td>
+                <!-- <td></td> -->
+                <!-- <td></td> -->
+            </tr>
+
+            <tr>
+                <td>日</td>
+                <td>一</td>
+                <td>二</td>
+                <td>三</td>
+                <td>四</td>
+                <td>五</td>
+                <td>六</td>
+            </tr>
+
+            <?php
+            
+                $firstDay="{$year}-{$month}-1";
+                $firstDay_stamp=strtotime($firstDay);
+                
+                $week_firstDay=date("N", $firstDay_stamp);
+                $start_stamp=strtotime("-$week_firstDay days",$firstDay_stamp);
+                
+                for($i=0;$i<6;$i++){
+                    echo "<tr>";
+                    for($j=0;$j<7;$j++){
+                        $isToday=(date("Y-m-d",$start_stamp)==date("Y-m-d"))?'today':'';
+                        $theMonth=(date("m",$start_stamp)==date("m",$firstDay_stamp))?'':'grey-text';
+                        $w=date("w", $start_stamp);
+                        $isHoliday=($w==0 || $w==6)?'holiday':'';
+                    
+                        $spDateClass = isset($spDate[date("Y-m-d", $start_stamp)]) ? 'spDate-class' : '';
+                    
+                        // 將所有類別合併到一起
+                        echo "<td class='$theMonth $isToday $isHoliday $spDateClass'>";
+                        echo date("j", $start_stamp);
+                    
+                        if(isset($spDate[date("Y-m-d",$start_stamp)])){
+                            echo "<br>{$spDate[date("Y-m-d",$start_stamp)]}";
+                        }
+                        if(isset($holidays[date("m-d",$start_stamp)])){
+                            echo "<br>{$holidays[date("m-d",$start_stamp)]}";
+                        }
+                        $start_stamp=strtotime("+1 day", $start_stamp);
+                        echo "</td>";
+                    }
+                    echo "</tr>";
+                }
+                
+            ?>
+        </table>
+    </div>
+    <div class="last_next">
+        <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
+    </div>
 </div>
 
-<div class="main_table"> 
-<table>
 
-<tr class='nav'>
-    <td colspan=3 style='text-align:left'>
-        <a href="calendar_pra.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>&nbsp;
-        <a href="calendar_pra.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">上個月</a>&nbsp;&nbsp;&nbsp;
-    </td>
-    <!-- <td></td> -->
-    <!-- <td></td> -->
-    <td  style='text-align:center'>
-        <a href="./calendar_pra.php">本月</a>&nbsp;&nbsp;&nbsp;
-    </td>
-    <td colspan=3 style='text-align:right'>
-        <a href="calendar_pra.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">下個月</a>&nbsp;
-        <a href="calendar_pra.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>    
-    </td>
-    <!-- <td></td> -->
-    <!-- <td></td> -->
-</tr>    
-
-
-<tr>
-<td>日</td>
-<td>一</td>
-<td>二</td>
-<td>三</td>
-<td>四</td>
-<td>五</td>
-<td>六</td>
-</tr>
 
 <?php
-
-
-$firstDay="{$year}-{$month}-1";
-$firstDay_stamp=strtotime($firstDay);
-
-$week_firstDay=date("N", $firstDay_stamp);
-$start_stamp=strtotime("-$week_firstDay days",$firstDay_stamp);
-
-for($i=0;$i<6;$i++){
-echo "<tr>";
-for($j=0;$j<7;$j++){
-    $isToday=(date("Y-m-d",$start_stamp)==date("Y-m-d"))?'today':'';
-    $theMonth=(date("m",$start_stamp)==date("m",$firstDay_stamp))?'':'grey-text';
-    $w=date("w", $start_stamp);
-    $isHoliday=($w==0 || $w==6)?'holiday':'';
-
-    $spDateClass = isset($spDate[date("Y-m-d", $start_stamp)]) ? 'spDate-class' : '';
-
-    // 將所有類別合併到一起
-    echo "<td class='$theMonth $isToday $isHoliday $spDateClass'>";
-    echo date("j", $start_stamp);
-
-    if(isset($spDate[date("Y-m-d",$start_stamp)])){
-        echo "<br>{$spDate[date("Y-m-d",$start_stamp)]}";
-    
-    }
-    if(isset($holidays[date("m-d",$start_stamp)])){
-        echo "<br>{$holidays[date("m-d",$start_stamp)]}";
-    }
-    $start_stamp=strtotime("+1 day", $start_stamp);
-
-    echo "</td>";
-}
-echo "</tr>";
-}
-
-?>
-</table>
-</div>
-
-<div class="pre_post">
-    <a href="calendar_pra.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
-</div>
-</div>
-
-
-<div class="box">
-<?php
-
 
 if(isset($_GET['year'])){
     $year=$_GET['year'];
@@ -283,7 +313,6 @@ if(isset($_GET['month'])){
 }else{
     $month=date("m");
 }
-
 
 if($month-1<1){
     $prevMonth=12;
@@ -300,26 +329,25 @@ if($month+1>12){
     $nextMonth=$month+1;
     $nextYear=$year;
 }
-
-
+    
 ?>
 
-
+<div class="box">
 
 <?php
 for($whichMonth=1;$whichMonth<=12;$whichMonth++){
 ?>
 
-<div class="per_month"><a href="calendar_pra.php?year=<?=$year;?>&month=<?=$whichMonth;?>" style="text-decoration: none; color: inherit;">
-<table>
-
-<div>
-<h2 class="month"><?php echo $whichMonth?></h2>
-</div>
+    <div class="per_month">
+        <a href="calendar_year.php?year=<?=$year;?>&month=<?=$whichMonth;?>" style="text-decoration: none; color: inherit;">
+        <table>
+            <div>
+                <h2 class="month">
+                    <?php echo $whichMonth?>
+                </h2>
+            </div>
 
 <?php
-
-
 $firstDay="{$year}-{$whichMonth}-1";
 $firstDay_stamp=strtotime($firstDay);
 
@@ -336,15 +364,14 @@ for($i=0;$i<6;$i++){
         echo "<td class='$theMonth $isToday $isHoliday'>";
         echo date("j",$start_stamp);
         $start_stamp=strtotime("+1 day", $start_stamp);
-
     }
     echo "</tr>";
 }
 
 ?> 
-</table>
-</a>
-</div>
+        </table>
+        </a>
+    </div>
 
 <?php    
 }
@@ -352,7 +379,5 @@ for($i=0;$i<6;$i++){
 
 </div>
 
-
 </body>
-
 </html>
