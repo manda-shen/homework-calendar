@@ -13,31 +13,114 @@
         body {
             width: 100%;
             margin: 0px;
-            background-image: url('./birdsinthewater.jpg'); /* 設置背景圖片 */
+            padding: 0px;
+            background-image: url('https://fastly.picsum.photos/id/119/3264/2176.jpg?hmac=PYRYBOGQhlUm6wS94EkpN8dTIC7-2GniC3pqOt6CpNU'); 
             background-repeat: no-repeat; /* 防止背景圖片重複 */
             background-position: top; /* 將背景圖片置於最上方 */
             background-size: cover; /* 讓背景圖片覆蓋整個頁面 */
         }
 
-        .title{
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3000px;
+            background-color: rgba(161, 181, 185, 0.3); 
+            pointer-events: none; /* 讓遮罩不影響點擊操作 */
+            z-index: -1; /* 放置在背景圖片之上 */
+        }
+        .front{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 50px;
+            padding-top: 30px;
+        }
+
+                /* 當視窗寬度小於768px，設置固定寬度630px */
+        @media (max-width: 768px) {
+            .front {
+                width: 768px;
+            }
+        }
+
+        .top{
+            width: 280px;
+            height: 180px;
+            background-color: rgba(161, 181, 185, 1); 
+            padding:30px 20px;
+            display:flex;
+            border-radius: 20px;
             color: white;
-            text-align: center;
+            flex-direction: column;
+            margin-bottom: 10px;  
+            margin-left: 100px;         
+        }
+
+        .top a{
+            color: inherit; 
+            text-decoration: none;
+        }
+
+        .top1{
+            width: 220px;
+            height: 100px;
+            font-weight: border;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+        }
+        
+        .top2{
+            width: 200px;
+            height: 100px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .top_year{
+            width: 40%;
+            font-size: 60px;
+            font-weight: border;
+            color: white;
+            margin: auto;
+            margin-left: 20px;
+        }
+
+        .top_month{
+            width: 20%;
+            color: white;
+            font-size: 20px;
+            font-weight: border;
+            margin-left: 15px;
+            margin-right: 15px;
         }
 
        .main{
-            width: 80%;
+            width: 900px;
+            height: 65vh;
             margin: auto;
+            margin-top: 100px;
+            margin-bottom: 50px;
+            margin-right: 50px;
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
         }
 
+
+
         .last_next{
             width: 30px;
-            height: 30px;
-            font-size: 10px;
-            color: #ccc;
+            font-size: 12px;
+            color: white;
             padding: 5px 8px 5px 8px;
             border-radius: 10px;
             border:0.1em solid rgba(0,0,0,0.1);
@@ -51,10 +134,11 @@
         }
 
         .main_table{
-            width: 80%;
+            width: 90%;
             background-color: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
             padding:15px;
-            padding-top:0px;
             margin:10px;
             border-radius:10px;
             border:0.1em solid rgba(0,0,0,0.1);
@@ -63,36 +147,63 @@
 
         .main table{
             width: 100%;
-            color: #000;
+            color: #28404A;
             border-collapse: collapse;
+            border: 0;
         }
 
-        .main tr, 
+        .main_table tr {
+            border: none; /* 隱藏每個 tr 的邊框 */
+        }
+
         .main td {
             width: 14%;
-            text-align: center; /* 文字水平置中 */
-            padding-right:5px;
+            height: 12vh;
+            border: 1px solid white; /* 設置儲存格之間的格線為白色 */
+            border-left: 1px solid white; /* 左邊框設置為白色 */
+            border-top: 1px solid white;  /* 上邊框設置為白色 */
+            text-align: right; /* 文字向右對齊 */
+            vertical-align: top; /* 文字向上對齊 */
         }
+
+        .main_table tr:first-child td {
+            height: 50px;
+            text-align: center; /* 將文字水平置中 */
+            vertical-align: middle; /* 將文字垂直置中 */
+        }
+
+        .main_table td:first-child {
+            border-left: none; /* 移除每行第一個儲存格的左邊框 */
+        }
+
+        .main_table tr:first-child td {
+        border-top: none; /* 移除第一行所有儲存格的上邊框 */
+        }
+
+        .main_table tr td:last-child {
+            border-right: none;
+        }/* 移除最右邊的邊框 */
+
+        .main_table tr:last-child td {
+            border-bottom: none;
+        }/* 移除最下方的邊框 */
 
         .main a {
             color: inherit; 
             text-decoration: none;
         }
 
-        .spDate-class {
-            color: pink;
-            font-size: 12px
-        }
-
         .box{
-            margin:auto;
-            background-color: rgba(255,255,255,0.3);
+            margin:auto;        
+            background: rgba(161, 181, 185, 0.3);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
             width: 488px;
             display:flex;
             flex-wrap: wrap;
             padding: 20px 30px 40px;
             margin-top: 30px;
+            margin-bottom: 50px;
         }
 
         /* 預設寬度(最小)為420px，以下設置其他寬度 */
@@ -100,6 +211,8 @@
         @media (min-width: 768px) {
             .box {
                 width: 700px;
+                margin: auto;
+                margin-bottom: 50px;
             }
         }
 
@@ -107,6 +220,8 @@
         @media (min-width: 992px) {
             .box {
                 width: 914px;
+                margin-right: 95px;
+                margin-bottom: 50px;
             }
         }
 
@@ -121,12 +236,6 @@
 
         tr,td{
             padding: 5px;
-        }
-
-        h2{
-            margin-top: 10px;
-            margin-bottom: 2px;
-            color: #74ACAC;
         }
 
         .per_month{
@@ -144,16 +253,30 @@
             font-size: 14px;
         }
 
-        .holiday{
-
-            color: #3CAEAE;
+        .month{
+            margin-top:8px;
+            margin-bottom: 2px;
         }
+
+        .holiday{
+            color: #C46A1B;
+        }
+
+        .holidays{
+            color: #C46A1B;
+        }
+        
         .grey-text{
-            color:#ccc;
+            color:#9EA6A8;
         }
         .today{
             color:red;
             font-weight: bold;
+        }
+
+        .spDate-class {
+            color: #6B346F;
+            font-size: 12px
         }
 
 
@@ -214,13 +337,35 @@ $holidays = [
 ];
 
 ?>
-
-<div class="title">
-    <h3>
-        <?php echo date("{$year}年{$month}月") ?>
-    </h3>
+<!-- 上半區顯示區塊 -->
+<div class="front">
+<!-- 上面日期顯示區塊 -->
+<div class="top">
+    <div class="top1">    
+        <div class="last_next">
+            <a href="calendar_year.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>
+        </div>
+        <div class="top_year">
+            <?php echo date("{$year}") ?>
+        </div>
+        <div class="last_next">
+            <a href="calendar_year.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>
+        </div>    
+    </div>
+    <div class="top2">    
+        <div class="last_next">
+            <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
+        </div>
+        <div class="top_month">
+            <?php echo date("{$month}月") ?>
+        </div>
+        <div class="last_next">
+            <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
+        </div>    
+    </div>
 </div>
 
+<!-- 主要月曆顯示區塊 -->
 <div class="main">
     <div class="last_next">
         <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
@@ -228,24 +373,6 @@ $holidays = [
 
     <div class="main_table"> 
         <table>
-            <tr class='nav'>
-                <td colspan=3 style='text-align:left'>
-                    <a href="calendar_year.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>&nbsp;
-                    <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">上個月</a>&nbsp;&nbsp;&nbsp;
-                </td>
-                <!-- <td></td> -->
-                <!-- <td></td> -->
-                <td  style='text-align:center'>
-                    <a href="./calendar_year.php">本月</a>&nbsp;&nbsp;&nbsp;
-                </td>
-                <td colspan=3 style='text-align:right'>
-                    <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">下個月</a>&nbsp;
-                    <a href="calendar_year.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>    
-                </td>
-                <!-- <td></td> -->
-                <!-- <td></td> -->
-            </tr>
-
             <tr>
                 <td>日</td>
                 <td>一</td>
@@ -276,6 +403,7 @@ $holidays = [
                     
                         // 將所有類別合併到一起
                         echo "<td class='$theMonth $isToday $isHoliday $spDateClass'>";
+                        echo "<div class='per_day'>";
                         echo date("j", $start_stamp);
                     
                         if(isset($spDate[date("Y-m-d",$start_stamp)])){
@@ -285,6 +413,7 @@ $holidays = [
                             echo "<br>{$holidays[date("m-d",$start_stamp)]}";
                         }
                         $start_stamp=strtotime("+1 day", $start_stamp);
+                        echo "</div>";
                         echo "</td>";
                     }
                     echo "</tr>";
@@ -297,9 +426,9 @@ $holidays = [
         <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
     </div>
 </div>
+</div>
 
-
-
+<!-- 下面年曆區塊 -->
 <?php
 
 if(isset($_GET['year'])){
