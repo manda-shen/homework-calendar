@@ -114,8 +114,8 @@
 
         .dec_img{
             width: 100px;
-            height: 120px;
-            background-image: url('./img/b43e633de3899b110316f6d628dab974.png'); 
+            height: 140px;
+            background-image: url('./img/bear1.png'); 
             background-repeat: no-repeat; /* 防止背景圖片重複 */
             background-size: cover; /* 讓背景圖片覆蓋整個頁面 */
             display:flex;
@@ -124,6 +124,7 @@
             padding: 0px;
             padding-bottom: 15px;
             margin-right: 10px;
+            filter: drop-shadow(0px 5px 1px rgba(0, 0, 0, 0.2));
         }
 
         .this_month{
