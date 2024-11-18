@@ -213,6 +213,15 @@
             vertical-align: top; /* 文字向上對齊 */
         }
 
+        .main td:hover{
+            background-color: white;
+        }
+
+        .per_day{
+            width: 100%;
+            height: 100%;
+        }
+
         .main_table tr:first-child td {
             height: 50px;
             text-align: center; /* 將文字水平置中 */
@@ -454,7 +463,7 @@ $holidays = [
                     
                         // 將所有類別合併到一起
                         echo "<td class='$theMonth $isToday $isHoliday $spDateClass'>";
-                        echo "<div class='per_day'>";
+                        echo "<a href='./per_day.php'><div class='per_day'>";
                         echo date("j", $start_stamp);
                     
                         if(isset($spDate[date("Y-m-d",$start_stamp)])){
@@ -464,7 +473,7 @@ $holidays = [
                             echo "<br>{$holidays[date("m-d",$start_stamp)]}";
                         }
                         $start_stamp=strtotime("+1 day", $start_stamp);
-                        echo "</div>";
+                        echo "</div></a>";
                         echo "</td>";
                     }
                     echo "</tr>";
