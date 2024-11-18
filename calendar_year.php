@@ -99,6 +99,7 @@
             width: 70px;
             color: white;
             font-size: 36px;
+            font-weight: 800;
             font-weight: border;
             justify-self:flex-end;
             padding: 0px;
@@ -107,6 +108,7 @@
 
         .top_month::after{
             content:"月";
+            font-weight: 400;
             color: white;
             font-size: 12px;
             margin-left: -5px;
@@ -119,30 +121,32 @@
             background-repeat: no-repeat; /* 防止背景圖片重複 */
             background-size: cover; /* 讓背景圖片覆蓋整個頁面 */
             display:flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: flex-end;
             padding: 0px;
             padding-bottom: 15px;
             margin-right: 10px;
-            filter: drop-shadow(0px 5px 1px rgba(0, 0, 0, 0.2));
+            filter: drop-shadow(1px 5px 1px rgba(0, 0, 0, 0.2));
         }
 
-        .this_month{
-            width: 60px;
-            height: 24px;
-            font-size: 14px;
+        .back_today{
+            width: 70px;
+            height: 40px;
+            font-size: 16px;
             background: rgba(88, 116, 122, 0.4);
             color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: 800;
             backdrop-filter: blur(3px);
             border: 2px solid white;
             box-shadow:0.7px 1px 5px rgba(0,0,0,0.1);
-            border-radius: 10px;
+            border-radius: 20px;
             display:flex;
             justify-content: center;
             align-items: center;
         }
 
-        .this_month:hover{
+        .back_today:hover{
             background: rgba(255, 255, 255, 0.7);
             color: #58747A;
             backdrop-filter: blur(3px);
@@ -167,7 +171,8 @@
 
         .last_next{
             width: 30px;
-            font-size: 12px;
+            font-size: 13px;
+            font-weight: 200;
             color: white;
             padding: 5px 8px 5px 8px;
             border-radius: 10px;
@@ -304,6 +309,11 @@
             border:0.1em solid rgba(0,0,0,0.1);
             box-shadow:0.7px 1px 5px rgba(0,0,0,0.1);
         }
+
+        .per_month:hover{
+            background-color: #F9F2EB;
+        }
+
         .month::after{
             content:" 月";
             color: #74ACAC;
@@ -411,7 +421,7 @@ $holidays = [
         </div>    
     </div>
     <div class="dec_img">
-        <div class="this_month"><a href="./calendar_year.php">Today</a></div>
+        <div class="back_today"><a href="./calendar_year.php">Today</a></div>
     </div>
     <div class="top2">    
         <div class="last_next">
