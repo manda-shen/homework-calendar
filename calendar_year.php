@@ -44,18 +44,21 @@
         @media (max-width: 768px) {
             .front {
                 width: 768px;
+                margin: center;
             }
         }
 
         .top{
-            width: 280px;
-            height: 180px;
+            width: 300px;
+            height: 300px;
             background-color: rgba(161, 181, 185, 1); 
             padding:30px 20px;
             display:flex;
             border-radius: 20px;
             color: white;
-            flex-direction: column;
+            flex-wrap: wrap;
+            align-content: center;
+            justify-content: flex-end;
             margin-bottom: 10px;  
             margin-left: 100px;         
         }
@@ -66,40 +69,85 @@
         }
 
         .top1{
-            width: 220px;
+            width: 100%;
             height: 100px;
-            font-weight: border;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-left: 10px;
+            margin-left: 5px;
         }
         
         .top2{
-            width: 200px;
+            width: 134px;
             height: 100px;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .top_year{
             width: 40%;
-            font-size: 60px;
-            font-weight: border;
+            font-size: 75px;
+            font-weight: 1000;
             color: white;
             margin: auto;
-            margin-left: 20px;
+            margin-left: 25px;
         }
 
         .top_month{
-            width: 20%;
+            width: 70px;
             color: white;
-            font-size: 20px;
+            font-size: 36px;
             font-weight: border;
-            margin-left: 15px;
-            margin-right: 15px;
+            justify-self:flex-end;
+            padding: 0px;
+            text-align: center;
+        }
+
+        .top_month::after{
+            content:"月";
+            color: white;
+            font-size: 12px;
+            margin-left: -5px;
+        }
+
+        .dec_img{
+            width: 100px;
+            height: 120px;
+            background-image: url('./img/b43e633de3899b110316f6d628dab974.png'); 
+            background-repeat: no-repeat; /* 防止背景圖片重複 */
+            background-size: cover; /* 讓背景圖片覆蓋整個頁面 */
+            display:flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 0px;
+            padding-bottom: 15px;
+            margin-right: 10px;
+        }
+
+        .this_month{
+            width: 60px;
+            height: 24px;
+            font-size: 14px;
+            background: rgba(88, 116, 122, 0.4);
+            color: white;
+            backdrop-filter: blur(3px);
+            border: 2px solid white;
+            box-shadow:0.7px 1px 5px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .this_month:hover{
+            background: rgba(255, 255, 255, 0.7);
+            color: #58747A;
+            backdrop-filter: blur(3px);
+            border: 1px solid #58747A;
+            box-shadow:0.7px 1px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
         }
 
        .main{
@@ -108,7 +156,6 @@
             margin: auto;
             margin-top: 100px;
             margin-bottom: 50px;
-            margin-right: 50px;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -227,7 +274,7 @@
 
 
         table{
-            color: #000;
+            color: #28404A;
             border-collapse: collapse;
             font-size: 0.8rem;
  
@@ -254,6 +301,7 @@
         }
 
         .month{
+            color: #28404A;
             margin-top:8px;
             margin-bottom: 2px;
         }
@@ -352,12 +400,15 @@ $holidays = [
             <a href="calendar_year.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>
         </div>    
     </div>
+    <div class="dec_img">
+        <div class="this_month"><a href="./calendar_year.php">Today</a></div>
+    </div>
     <div class="top2">    
         <div class="last_next">
             <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
         </div>
         <div class="top_month">
-            <?php echo date("{$month}月") ?>
+            <?php echo date("{$month}") ?>
         </div>
         <div class="last_next">
             <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
