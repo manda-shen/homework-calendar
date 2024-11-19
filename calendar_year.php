@@ -8,6 +8,8 @@
     <style>
         * {
             box-sizing: border-box;
+            padding: 0px;
+            margin: 0px;
         }
 
         body {
@@ -31,7 +33,7 @@
             pointer-events: none; /* 讓遮罩不影響點擊操作 */
             z-index: -1; /* 放置在背景圖片之上 */
         }
-        .front{
+        .allbody{
             width: 100%;
             display: flex;
             flex-wrap: wrap;
@@ -42,23 +44,25 @@
 
                 /* 當視窗寬度小於768px，設置固定寬度630px */
         @media (max-width: 768px) {
-            .front {
+            .allbody {
                 width: 768px;
                 margin: center;
+                display: flex;
+                flex-direction: column;
             }
         }
 
         .top{
-            width: 300px;
-            height: 300px;
+            width: 350px;
+            height: 350px;
             background-color: rgba(161, 181, 185, 1); 
             padding:30px 20px;
             display:flex;
             border-radius: 20px;
             color: white;
             flex-wrap: wrap;
-            align-content: center;
-            justify-content: flex-end;
+            align-content: space-around;
+            justify-content: space-around;
             margin-bottom: 10px;  
             margin-left: 100px;         
         }
@@ -69,7 +73,7 @@
         }
 
         .top1{
-            width: 100%;
+            width: 85%;
             height: 100px;
             display: flex;
             justify-content: center;
@@ -115,8 +119,8 @@
         }
 
         .dec_img{
-            width: 100px;
-            height: 140px;
+            width: 120px;
+            height: 170px;
             background-image: url('./img/bear1.png'); 
             background-repeat: no-repeat; /* 防止背景圖片重複 */
             background-size: cover; /* 讓背景圖片覆蓋整個頁面 */
@@ -127,6 +131,25 @@
             padding-bottom: 15px;
             margin-right: 10px;
             filter: drop-shadow(1px 5px 1px rgba(0, 0, 0, 0.2));
+            position: relative; /* 為偽元素設定參考位置 */
+        }
+
+        .dec_img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('./img/bear1.png');
+            background-size: cover;
+            opacity: 0;
+            filter: brightness(1.1) contrast(1.0) drop-shadow(1px 5px 1px rgba(0, 0, 0, 0.2));
+            transition: opacity 0.3s; /* 添加過渡效果 */
+        }
+
+        .dec_img:hover::before {
+            opacity: 1;
         }
 
         .back_today{
@@ -155,9 +178,28 @@
             transition: 0.3s;
         }
 
+        
+        .calendar{
+            width: calc(100% - 100px - 400px);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 當視窗寬度小於768px，設置固定寬度630px */
+        @media (max-width: 1257px) {
+            .calendar {
+                width: 90%;
+                min-width: 628px;
+                margin: center;
+                display: flex;
+                flex-direction: column;
+            }
+        }
        .main{
-            width: 900px;
-            height: 65vh;
+            width: 90%;
+            height: 40vw;
             margin: auto;
             margin-top: 100px;
             margin-bottom: 50px;
@@ -187,7 +229,8 @@
         }
 
         .main_table{
-            width: 90%;
+            width: 80%;
+            min-height: 350px;
             background-color: white;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
@@ -200,6 +243,8 @@
 
         .main table{
             width: 100%;
+            height: 100%;
+            height: 350px;
             color: #28404A;
             border-collapse: collapse;
             border: 0;
@@ -211,7 +256,8 @@
 
         .main td {
             width: 14%;
-            height: 12vh;
+            height: 5vw;
+            min-height:50px;
             border: 1px solid white; /* 設置儲存格之間的格線為白色 */
             border-left: 1px solid white; /* 左邊框設置為白色 */
             border-top: 1px solid white;  /* 上邊框設置為白色 */
@@ -256,34 +302,24 @@
         }
 
         .box{
-            margin:auto;        
+  
             background: rgba(161, 181, 185, 0.3);
             backdrop-filter: blur(10px);
             border-radius: 25px;
-            width: 488px;
+            width: 100%;;
             display:flex;
             flex-wrap: wrap;
             padding: 20px 30px 40px;
             margin-top: 30px;
             margin-bottom: 50px;
+            border:0.1em solid rgba(0,0,0,0.1);
+            box-shadow:0.7px 1px 5px rgba(0,0,0,0.1);
         }
 
-        /* 預設寬度(最小)為420px，以下設置其他寬度 */
-        /* 當視窗寬度大於576px，設置固定寬度630px */
-        @media (min-width: 768px) {
+        /* 當視窗寬度小於768px，設置固定寬度630px */
+        @media (max-width: 1257px) {
             .box {
-                width: 700px;
-                margin: auto;
-                margin-bottom: 50px;
-            }
-        }
-
-        /* 當視窗寬度大於768px，設置固定寬度839px */
-        @media (min-width: 992px) {
-            .box {
-                width: 914px;
-                margin-right: 95px;
-                margin-bottom: 50px;
+                width: 100%;
             }
         }
 
@@ -405,9 +441,10 @@ $holidays = [
 ];
 
 ?>
-<!-- 上半區顯示區塊 -->
-<div class="front">
-<!-- 上面日期顯示區塊 -->
+<!-- 全區顯示區塊 .allbody -->
+<div class="allbody">
+
+<!-- 上面日期顯示區塊 .top -->
 <div class="top">
     <div class="top1">    
         <div class="last_next">
@@ -435,13 +472,21 @@ $holidays = [
         </div>    
     </div>
 </div>
+<!-- .top結束 -->
 
-<!-- 主要月曆顯示區塊 -->
+<!-- 右邊主要月曆及年曆區塊 .calender -->
+ <div class="calendar">
+
+<!-- 主要月曆顯示區塊 .main -->
 <div class="main">
+
+    <!-- 月份小按鈕 .last_next -->
     <div class="last_next">
         <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
     </div>
+    <!-- .last_next結束 -->
 
+    <!-- 主月曆 .main_table -->
     <div class="main_table"> 
         <table>
             <tr>
@@ -493,13 +538,19 @@ $holidays = [
             ?>
         </table>
     </div>
+    <!-- .main_table結束 -->
+
+    <!-- 月份小按鈕 .last_next -->
     <div class="last_next">
         <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
     </div>
-</div>
-</div>
+    <!-- .last_next結束 -->
 
-<!-- 下面年曆區塊 -->
+</div>
+<!-- .main結束 -->
+
+
+<!-- ---------以下年曆區塊----------- -->
 <?php
 
 if(isset($_GET['year'])){
@@ -532,12 +583,13 @@ if($month+1>12){
     
 ?>
 
+<!-- 年曆區塊 .box -->
 <div class="box">
 
 <?php
 for($whichMonth=1;$whichMonth<=12;$whichMonth++){
 ?>
-
+    <!-- 年曆中小月曆 .per_month -->
     <div class="per_month">
         <a href="calendar_year.php?year=<?=$year;?>&month=<?=$whichMonth;?>" style="text-decoration: none; color: inherit;">
         <table>
@@ -572,12 +624,18 @@ for($i=0;$i<6;$i++){
         </table>
         </a>
     </div>
+    <!-- 年曆中小月曆 .per_month -->
 
 <?php    
 }
 ?>
 
-</div>
 
+</div>
+<!-- .box結束 -->
+</div>
+<!-- .calender結束 -->
+</div>
+<!-- .allbody結束 -->
 </body>
 </html>
