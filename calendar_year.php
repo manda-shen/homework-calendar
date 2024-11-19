@@ -33,13 +33,13 @@
             pointer-events: none; /* 讓遮罩不影響點擊操作 */
             z-index: -1; /* 放置在背景圖片之上 */
         }
+
         .allbody{
             width: 100%;
+            margin: 0px;
+            padding: 0px;
             display: flex;
             flex-wrap: wrap;
-            margin-bottom: 20px;
-            padding: 50px;
-            padding-top: 30px;
         }
 
                 /* 當視窗寬度小於768px，設置固定寬度630px */
@@ -53,18 +53,19 @@
         }
 
         .top{
-            width: 350px;
+            width: 400px;
             height: 350px;
             background-color: rgba(161, 181, 185, 1); 
             padding:30px 20px;
+            margin-top: 30px;
+            margin-bottom: 10px;  
             display:flex;
-            border-radius: 20px;
+            border-radius: 0px 20px 20px 0px;
             color: white;
             flex-wrap: wrap;
             align-content: space-around;
             justify-content: space-around;
-            margin-bottom: 10px;  
-            margin-left: 100px;         
+      
         }
 
         .top a{
@@ -187,12 +188,12 @@
             align-items: center;
         }
 
-        /* 當視窗寬度小於768px，設置固定寬度630px */
+        /* 當視窗寬度小於1257px，設置寬度90% */
         @media (max-width: 1257px) {
             .calendar {
                 width: 90%;
                 min-width: 628px;
-                margin: center;
+                margin: auto;
                 display: flex;
                 flex-direction: column;
             }
