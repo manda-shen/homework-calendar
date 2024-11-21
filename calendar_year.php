@@ -89,6 +89,10 @@ $holidays = [
             <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
         </div>    
     </div>
+
+    <div class="memo" id="memo">
+    <textarea name="theTextarea" id="" cols="50" rows="7"></textarea>
+    </div>
 </div>
 <!-- .top結束 -->
 
@@ -137,7 +141,7 @@ $holidays = [
                     
                         // 將所有類別合併到一起
                         echo "<td class='$theMonth $isToday $isHoliday $spDateClass'>";
-                        echo "<a href='./per_day.php'><div class='per_day'>";
+                        echo "<a href='./#memo'><div class='per_day'>";
                         echo date("j", $start_stamp);
                     
                         if(isset($spDate[date("Y-m-d",$start_stamp)])){
