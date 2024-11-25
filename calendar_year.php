@@ -41,22 +41,7 @@ if($month+1>12){
     $nextYear=$year;
 }
 
-$spDate=['2024-11-07'=>"立冬",
-         '2024-06-10' => "端午節",
-         '2024-09-17' => "中秋節",
-         '2025-06-20' => "端午節",
-         '2025-09-27' => "中秋節",
-         '2026-06-30' => "端午節",
-         '2026-10-07' => "中秋節",
-         '2024-11-22'=>'小雪'];
-$holidays = [
-    '01-01' => "元旦",
-    '02-10' => "農曆新年",
-    '04-04' => "兒童節",
-    '04-05' => "清明節",
-    '05-01' => "勞動節",
-    '10-10' => "國慶日"
-];
+include("holiday.php");
 
 ?>
 <!-- 全區顯示區塊 .allbody -->
@@ -76,7 +61,9 @@ $holidays = [
         </div>    
     </div>
     <div class="dec_img">
-        <div class="back_today"><a href="./calendar_year.php">Today</a></div>
+        <div class="back_today">
+            <a href="./calendar_year.php">Today</a>
+        </div>
     </div>
     <div class="top2">    
         <div class="last_next">
@@ -88,10 +75,6 @@ $holidays = [
         <div class="last_next">
             <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
         </div>    
-    </div>
-
-    <div class="memo" id="memo">
-    <textarea name="theTextarea" id="" cols="50" rows="7"></textarea>
     </div>
 </div>
 <!-- .top結束 -->
@@ -135,12 +118,12 @@ $holidays = [
                         $isToday=(date("Y-m-d",$start_stamp)==date("Y-m-d"))?'today':'';
                         $theMonth=(date("m",$start_stamp)==date("m",$firstDay_stamp))?'':'grey-text';
                         $w=date("w", $start_stamp);
-                        $isHoliday=($w==0 || $w==6)?'holiday':'';
+                        $isWeekend=($w==0 || $w==6)?'weekend':'';
                     
                         $spDateClass = isset($spDate[date("Y-m-d", $start_stamp)]) ? 'spDate-class' : '';
                     
                         // 將所有類別合併到一起
-                        echo "<td class='$theMonth $isToday $isHoliday $spDateClass'>";
+                        echo "<td class='$theMonth $isToday $isWeekend $spDateClass'>";
                         echo "<a href='./#memo'><div class='per_day'>";
                         echo date("j", $start_stamp);
                     
@@ -148,7 +131,7 @@ $holidays = [
                             echo "<br>{$spDate[date("Y-m-d",$start_stamp)]}";
                         }
                         if(isset($holidays[date("m-d",$start_stamp)])){
-                            echo "<br>{$holidays[date("m-d",$start_stamp)]}";
+                            echo "<br><span class='holidays'>{$holidays[date("m-d",$start_stamp)]}</span>";
                         }
                         $start_stamp=strtotime("+1 day", $start_stamp);
                         echo "</div></a>";
@@ -234,8 +217,8 @@ for($i=0;$i<6;$i++){
         $isToday=(date("Y-m-d",$start_stamp)==date("Y-m-d"))?'today':'';
         $theMonth=(date("m",$start_stamp)==date("m",$firstDay_stamp))?'':'grey-text';
         $w=date("w", $start_stamp);
-        $isHoliday=($w==0 || $w==6)?'holiday':'';
-        echo "<td class='$theMonth $isToday $isHoliday'>";
+        $isWeekend=($w==0 || $w==6)?'weekend':'';
+        echo "<td class='$theMonth $isToday $isWeekend'>";
         echo date("j",$start_stamp);
         $start_stamp=strtotime("+1 day", $start_stamp);
     }
