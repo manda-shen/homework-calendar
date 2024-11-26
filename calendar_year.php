@@ -24,6 +24,12 @@ if(isset($_GET['month'])){
     $month=date("m");
 }
 
+if(isset($_GET['day'])){
+    $day=$_GET['day'];
+}else{
+    $day=date("d");
+}
+
 
 if($month-1<1){
     $prevMonth=12;
@@ -45,7 +51,7 @@ include("holiday.php");
 
 ?>
 <!-- 全區顯示區塊 .allbody -->
-<div class="allbody">
+<!-- <div class="allbody"> -->
 
 <!-- 上面日期顯示區塊 .top -->
 <div class="top">
@@ -60,11 +66,7 @@ include("holiday.php");
             <a href="calendar_year.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>
         </div>    
     </div>
-    <div class="dec_img">
-        <div class="back_today">
-            <a href="./calendar_year.php">Today</a>
-        </div>
-    </div>
+
     <div class="top2">    
         <div class="last_next">
             <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
@@ -76,17 +78,19 @@ include("holiday.php");
             <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
         </div>    
     </div>
+
+    <div class="dec_img">
+        <div class="back_today">
+            <a href="./calendar_year.php">Today</a>
+        </div>
+    </div>
 </div>
 <!-- .top結束 -->
 
-<!-- 右邊主要月曆及年曆區塊 .calender -->
+<!-- 右邊主要月曆區塊 .calender -->
 <div class="calendar">
 
-<div class="title">
-    <?php echo date("{$year}年{$month}月") ?>
-</div>
-
-<!-- 主要月曆顯示區塊 .main -->
+<!-- 主月曆顯示區塊 .main -->
 <div class="main">
 
     <!-- 月份小按鈕 .last_next -->
@@ -94,6 +98,12 @@ include("holiday.php");
         <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
     </div>
     <!-- .last_next結束 -->
+    
+    <!-- 主月曆 .main_calendar -->
+    <div class="main_calendar">
+    <div class="show_date">
+      <?php echo date("{$year}年{$month}月{$day}日") ?>
+    </div>
 
     <!-- 主月曆 .main_table -->
     <div class="main_table"> 
@@ -119,6 +129,7 @@ include("holiday.php");
                 for($i=0;$i<6;$i++){
                     echo "<tr>";
                     for($j=0;$j<7;$j++){
+                        $formattedDate = date("Y年n月j日", $start_stamp); // 生成完整的日期格式
                         $isToday=(date("Y-m-d",$start_stamp)==date("Y-m-d"))?'today':'';
                         $theMonth=(date("m",$start_stamp)==date("m",$firstDay_stamp))?'':'grey-text';
                         $w=date("w", $start_stamp);
@@ -127,8 +138,8 @@ include("holiday.php");
                         $spDateClass = isset($spDate[date("Y-m-d", $start_stamp)]) ? 'spDate-class' : '';
                     
                         // 將所有類別合併到一起
-                        echo "<td class='$theMonth $isToday $isWeekend $spDateClass'>";
-                        echo "<a href='./#memo'><div class='per_day'>";
+                        echo "<td class='$theMonth $isToday $isWeekend $spDateClass' data-date='$formattedDate'>";
+                        echo "<a href='#'><div class='per_day'>";
                         echo date("j", $start_stamp);
                     
                         if(isset($spDate[date("Y-m-d",$start_stamp)])){
@@ -148,6 +159,8 @@ include("holiday.php");
         </table>
     </div>
     <!-- .main_table結束 -->
+    </div>
+    <!-- .main_calendar結束 -->
 
     <!-- 月份小按鈕 .last_next -->
     <div class="last_next">
@@ -160,6 +173,30 @@ include("holiday.php");
 
 </div>
 <!-- .calender結束 -->
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const dateCells = document.querySelectorAll('.main_table td'); // 取得所有日期儲存格
+    const showDateDiv = document.querySelector('.show_date'); // 日期顯示區塊
+
+    dateCells.forEach(cell => {
+        cell.addEventListener('click', () => {
+            // 清除其他儲存格的選中狀態
+            dateCells.forEach(c => c.classList.remove('selected'));
+
+            // 設定當前點擊的儲存格為選中
+            cell.classList.add('selected');
+
+            // 更新日期顯示區
+            const selectedDate = cell.getAttribute('data-date'); // 從 data-date 中取得值
+            if (selectedDate) {
+                showDateDiv.textContent = `${selectedDate}`;
+            }
+        });
+    });
+});
+
+</script>
 
 <!-- ---------以下年曆區塊----------- -->
 <?php
@@ -245,7 +282,7 @@ for($i=0;$i<6;$i++){
 </div>
 <!-- .box結束 -->
 
-</div>
+<!-- </div> -->
 <!-- .allbody結束 -->
 </body>
 </html>

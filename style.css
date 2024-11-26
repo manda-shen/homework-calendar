@@ -8,6 +8,8 @@ body {
     width: 100%;
     margin: 0px;
     padding: 0px;
+    display: flex;
+    flex-wrap: wrap;
     background-image: url('https://fastly.picsum.photos/id/119/3264/2176.jpg?hmac=PYRYBOGQhlUm6wS94EkpN8dTIC7-2GniC3pqOt6CpNU');
     background-repeat: no-repeat;
     /* 防止背景圖片重複 */
@@ -31,27 +33,29 @@ body::before {
     /* 放置在背景圖片之上 */
 }
 
-.allbody {
+/* .allbody {
     width: 100%;
     margin: 0px;
     padding: 0px;
     display: flex;
     flex-wrap: wrap;
-}
+} */
 
 /* 當視窗寬度小於768px，設置固定寬度630px */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
     .allbody {
         width: 768px;
         margin: center;
         display: flex;
         flex-direction: column;
     }
-}
+} */
+
 
 .top {
-    width: 400px;
-    max-height: 830px;
+    width: 350px;
+    height: 90vh;
+    max-height: 650px;
     background-color: rgba(161, 181, 185, 1);
     padding: 30px 20px;
     margin-top: 30px;
@@ -59,10 +63,22 @@ body::before {
     display: flex;
     border-radius: 0px 20px 20px 0px;
     color: white;
-    flex-wrap: wrap;
-    align-content: space-around;
-    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
 
+}
+
+@media (max-width: 991px) {  
+    .top {
+        width: 300px;
+        border-radius: 0px;
+    }
+}
+
+@media (max-width: 767px) {  
+    .top {
+        width: 100%;
+    }
 }
 
 .top a {
@@ -74,33 +90,32 @@ body::before {
     width: 85%;
     height: 100px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    margin-left: 5px;
+
 }
 
 .top_year {
-    width: 40%;
+    width: 55%;
     font-size: 75px;
     font-weight: 1000;
     color: white;
-    margin: auto;
-    margin-left: 25px;
+    text-align: center;
 }
 
 .top2 {
-    width: 134px;
+    width: 85%;
     height: 100px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 10%;
 }
 
 .top_month {
-    width: 70px;
+    width: 55%;
     color: white;
-    font-size: 36px;
+    font-size: 52px;
     font-weight: 800;
     font-weight: border;
     justify-self: flex-end;
@@ -129,6 +144,7 @@ body::before {
     align-items: flex-end;
     padding: 0px;
     padding-bottom: 15px;
+    margin-top: 50px;
     margin-right: 10px;
     filter: drop-shadow(1px 5px 1px rgba(0, 0, 0, 0.2));
     position: relative;
@@ -204,8 +220,7 @@ body::before {
     width: 90%;
     height: 40vw;
     margin: auto;
-    margin-top: 100px;
-    margin-bottom: 50px;
+
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -219,6 +234,7 @@ body::before {
     font-size: 13px;
     font-weight: 200;
     color: white;
+    background-color: rgba(161, 181, 185, 1);
     padding: 5px 8px 5px 8px;
     border-radius: 10px;
     border: 0.1em solid rgba(0, 0, 0, 0.1);
@@ -231,11 +247,22 @@ body::before {
     transition: 0.2s;
 }
 
+.show_date{
+    width: 80%;
+    min-width: 600px;
+
+    color: #28404A;
+    padding: 0px;
+    margin: 10px;
+    text-align: center;
+    border-radius: 10px;
+    border: 0.1em solid rgba(0, 0, 0, 0.1);
+}
+
 .main_table {
     width: 80%;
     min-width: 600px;
     min-height: 400px;
-    background-color: white;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     padding: 15px;
@@ -279,9 +306,16 @@ body::before {
     /* 文字向上對齊 */
 }
 
-.main td:hover {
-    background-color: white;
+.main_table td:hover {
+    background-color: rgba(255, 255, 255, 0.8);
 }
+
+.main_table td.selected {
+    background-color: #6a8b97;
+    color: white;
+    font-weight: bold;
+}
+
 
 .per_day {
     width: 100%;
@@ -405,3 +439,5 @@ td {
     color: #6B346F;
     font-size: 12px
 }
+
+
