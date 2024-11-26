@@ -82,6 +82,10 @@ include("holiday.php");
 <!-- 右邊主要月曆及年曆區塊 .calender -->
 <div class="calendar">
 
+<div class="title">
+    <?php echo date("{$year}年{$month}月") ?>
+</div>
+
 <!-- 主要月曆顯示區塊 .main -->
 <div class="main">
 
@@ -154,6 +158,8 @@ include("holiday.php");
 </div>
 <!-- .main結束 -->
 
+</div>
+<!-- .calender結束 -->
 
 <!-- ---------以下年曆區塊----------- -->
 <?php
@@ -238,8 +244,7 @@ for($i=0;$i<6;$i++){
 
 </div>
 <!-- .box結束 -->
-</div>
-<!-- .calender結束 -->
+
 </div>
 <!-- .allbody結束 -->
 </body>
