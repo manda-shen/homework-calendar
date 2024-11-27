@@ -33,58 +33,50 @@ body::before {
     /* 放置在背景圖片之上 */
 }
 
-/* .allbody {
-    width: 100%;
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-    flex-wrap: wrap;
-} */
-
-/* 當視窗寬度小於768px，設置固定寬度630px */
-/* @media (max-width: 768px) {
-    .allbody {
-        width: 768px;
-        margin: center;
-        display: flex;
-        flex-direction: column;
-    }
-} */
-
 
 .top {
-    width: 350px;
-    height: 90vh;
+    width: 20%;
+    min-width: 250px;
+    max-width: 350px;
+    aspect-ratio: 1 / 2;
+    /* 高度是寬度的 2 倍 */
     max-height: 650px;
     background-color: rgba(161, 181, 185, 1);
     padding: 30px 20px;
-    margin-top: 30px;
+    margin-top: 50px;
     margin-bottom: 10px;
     display: flex;
     border-radius: 0px 20px 20px 0px;
     color: white;
     flex-direction: column;
     align-items: center;
-
+    font-size: 18px;
 }
 
-@media (max-width: 991px) {  
+@media (max-width: 1533px) {
     .top {
-        width: 300px;
-        border-radius: 0px;
+        font-size: 15px;
     }
 }
 
-@media (max-width: 767px) {  
+@media (max-width: 1355px) {
     .top {
-        width: 100%;
+        font-size: 13px;
     }
 }
 
-.top a {
-    color: inherit;
-    text-decoration: none;
+@media (max-width: 1259px) {
+    .top {
+        font-size: 11px;
+    }
 }
+
+@media (max-width: 991px) {
+    .top {
+        font-size: 10px;
+    }
+}
+
 
 .top1 {
     width: 85%;
@@ -93,14 +85,6 @@ body::before {
     justify-content: space-around;
     align-items: center;
 
-}
-
-.top_year {
-    width: 55%;
-    font-size: 75px;
-    font-weight: 1000;
-    color: white;
-    text-align: center;
 }
 
 .top2 {
@@ -112,10 +96,94 @@ body::before {
     margin-top: 10%;
 }
 
+.back_today {
+    width: 70px;
+    height: 40px;
+    font-size: 16px;
+    background: rgba(88, 116, 122, 0.4);
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 800;
+    backdrop-filter: blur(3px);
+    border: 2px solid white;
+    box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 895px) {
+    .top {
+        width: 100% !important;
+        height: 25vh !important;
+        min-width: none;
+        max-width: none;
+        display: flex;
+        flex-direction: column;
+        border-radius: 0px !important;
+        margin-top: 0px;
+    }
+
+    .top1 {
+        width: 50%;
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .top2 {
+        width: 50%;
+        height: 50px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 20px;
+        margin-bottom: -50px;
+    }
+
+    .dec_img {
+        width: 10% !important;
+        aspect-ratio: 1 / 1.37;
+        /* 高度是寬度的 1.37 倍 */
+        max-width: none;
+        border-radius: 0px !important;
+        align-self: flex-start;
+        margin-top: -20px;
+    }
+
+    .back_today {
+        width: 70px;
+        height: 40px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        padding: 25px;
+        margin-right: -50px;
+    }
+
+}
+
+.top a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+.top_year {
+    width: 55%;
+    font-size: 4em;
+    font-weight: 1000;
+    color: white;
+    text-align: center;
+}
+
+
 .top_month {
     width: 55%;
     color: white;
-    font-size: 52px;
+    font-size: 3em;
     font-weight: 800;
     font-weight: border;
     justify-self: flex-end;
@@ -132,8 +200,9 @@ body::before {
 }
 
 .dec_img {
-    width: 120px;
-    height: 170px;
+    width: 60%;
+    aspect-ratio: 1 / 1.37;
+    /* 高度是寬度的 1.37 倍 */
     background-image: url('./img/bear1.png');
     background-repeat: no-repeat;
     /* 防止背景圖片重複 */
@@ -170,23 +239,6 @@ body::before {
     opacity: 1;
 }
 
-.back_today {
-    width: 70px;
-    height: 40px;
-    font-size: 16px;
-    background: rgba(88, 116, 122, 0.4);
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 800;
-    backdrop-filter: blur(3px);
-    border: 2px solid white;
-    box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .back_today:hover {
     background: rgba(255, 255, 255, 0.7);
     color: #58747A;
@@ -198,29 +250,30 @@ body::before {
 
 
 .calendar {
-    width: calc(100% - 100px - 400px);
+    width: calc(100% - 350px);
+    max-width: 1200px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
-/* 當視窗寬度小於1257px，設置寬度90% */
-@media (max-width: 1257px) {
+/* 當視窗寬度小於1259px，設置寬度90% */
+@media (max-width: 1259px) {
     .calendar {
-        width: 90%;
+        width: calc(100% - 350px);
         min-width: 628px;
         margin: auto;
+        margin-top: 30px;
         display: flex;
         flex-direction: column;
     }
 }
 
 .main {
-    width: 90%;
-    height: 40vw;
+    width: 95%;
     margin: auto;
-
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -247,26 +300,37 @@ body::before {
     transition: 0.2s;
 }
 
-.show_date{
-    width: 80%;
-    min-width: 600px;
+.main_calendar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 
-    color: #28404A;
-    padding: 0px;
-    margin: 10px;
+.show_date {
+    width: 300px;
+    color: white;
+    background-color: rgba(161, 181, 185, 1);
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 0px;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 10px 10px 0px 0px;
     border: 0.1em solid rgba(0, 0, 0, 0.1);
+    font-family: '微軟正黑體';
+    letter-spacing: 1.5px;
 }
 
 .main_table {
-    width: 80%;
+    width: 90%;
     min-width: 600px;
-    min-height: 400px;
+    aspect-ratio: 2 / 1.1;
+    /* 寬度是高度的 2 倍 */
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     padding: 15px;
     margin: 10px;
+    margin-top: 0px;
     border-radius: 10px;
     border: 0.1em solid rgba(0, 0, 0, 0.1);
     box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
@@ -277,8 +341,7 @@ body::before {
 
 .main_table table {
     width: 100%;
-    height: 100%;
-    height: 350px;
+    aspect-ratio: 2 / 1.1;
     color: #28404A;
     border-collapse: collapse;
     border: 0;
@@ -439,5 +502,3 @@ td {
     color: #6B346F;
     font-size: 12px
 }
-
-

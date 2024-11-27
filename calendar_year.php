@@ -102,7 +102,7 @@ include("holiday.php");
     <!-- 主月曆 .main_calendar -->
     <div class="main_calendar">
     <div class="show_date">
-      <?php echo date("{$year}年{$month}月{$day}日") ?>
+      <?php echo "{$year}&nbsp;年&nbsp;{$month}&nbsp;月&nbsp;{$day}&nbsp;日" ?>
     </div>
 
     <!-- 主月曆 .main_table -->
@@ -190,7 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // 更新日期顯示區
             const selectedDate = cell.getAttribute('data-date'); // 從 data-date 中取得值
             if (selectedDate) {
-                showDateDiv.textContent = `${selectedDate}`;
+                const formattedDate = ` ${selectedDate.replace(/([年月日])/g, " $1 ")} `;
+                showDateDiv.textContent = formattedDate.trim(); // 顯示格式化後的日期
             }
         });
     });
