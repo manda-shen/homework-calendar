@@ -30,9 +30,10 @@ date_default_timezone_set("Asia/Taipei");
 //     $day=date("d");
 // }
 
-// 檢查是否有用戶通過表單提交日期
+// 檢查是否有表單提交日期
 if (isset($_GET['goto']) && !empty($_GET['goto'])) {
-    $gotoDate = strtotime($_GET['goto']); // 解析日期
+    $gotoDate = strtotime($_GET['goto']); 
+    // 提交日期時間戳
     $year = date("Y", $gotoDate);
     $month = date("m", $gotoDate);
     $day = date("d", $gotoDate);
@@ -73,7 +74,9 @@ include("holiday.php");
             <a href="calendar_year.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>
         </div>
         <div class="top_year">
-            <?php echo date("{$year}") ?>
+            <a href="#boxContent">
+                <?php echo date("{$year}") ?>
+            </a>
         </div>
         <div class="last_next">
             <a href="calendar_year.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>
@@ -251,15 +254,40 @@ if($month+1>12){
     
 ?>
 
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const detailsElement = document.querySelector('#myBox');
+    const boxElement = document.querySelector('#boxContent');
+    
+    // 當 summary 被點擊時，確保展開並滾動
+    detailsElement.addEventListener('toggle', () => {
+        if (detailsElement.open) {
+            setTimeout(() => {
+                boxElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 10);
+        }
+    });
+
+    // 如果 URL 中包含 #boxContent，自動展開並滾動
+    if (location.hash === '#myBox') {
+        detailsElement.open = true;
+        setTimeout(() => {
+            boxElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 10);
+    }
+});
+</script>
+
 <!-- 年曆區塊 .box -->
 
 
-<details class="expand_collapse" id="myBox">
+<details id="myBox" <?= isset($_GET['year']) ? 'open' : ''; ?>>
     <summary>
         年曆
     </summary>
+<div class="box" id="boxContent">
 
-<div class="box">
 
 <?php
 for($whichMonth=1;$whichMonth<=12;$whichMonth++){
