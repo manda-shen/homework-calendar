@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calendar</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -71,7 +71,7 @@ include("holiday.php");
 <div class="top">
     <div class="top1">    
         <div class="last_next">
-            <a href="calendar_year.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>
+            <a href="calendar.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>
         </div>
         <div class="top_year">
             <a href="#boxContent">
@@ -79,25 +79,25 @@ include("holiday.php");
             </a>
         </div>
         <div class="last_next">
-            <a href="calendar_year.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>
+            <a href="calendar.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>
         </div>    
     </div>
 
     <div class="top2">    
         <div class="last_next">
-            <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
+            <a href="calendar.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
         </div>
         <div class="top_month">
             <?php echo date("{$month}") ?>
         </div>
         <div class="last_next">
-            <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
+            <a href="calendar.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
         </div>    
     </div>
 
     <div class="dec_img">
         <div class="back_today">
-            <a href="./calendar_year.php">Today</a>
+            <a href="./calendar.php">Today</a>
         </div>
     </div>
     <div class="goto">
@@ -117,7 +117,7 @@ include("holiday.php");
 
     <!-- 月份小按鈕 .last_next -->
     <div class="last_next">
-        <a href="calendar_year.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
+        <a href="calendar.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
     </div>
     <!-- .last_next結束 -->
     
@@ -186,7 +186,7 @@ include("holiday.php");
 
     <!-- 月份小按鈕 .last_next -->
     <div class="last_next">
-        <a href="calendar_year.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
+        <a href="calendar.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
     </div>
     <!-- .last_next結束 -->
 
@@ -294,7 +294,7 @@ for($whichMonth=1;$whichMonth<=12;$whichMonth++){
 ?>
     <!-- 年曆中小月曆 .per_month -->
     <div class="per_month">
-        <a href="calendar_year.php?year=<?=$year;?>&month=<?=$whichMonth;?>" style="text-decoration: none; color: inherit;">
+        <a href="calendar.php?year=<?=$year;?>&month=<?=$whichMonth;?>" style="text-decoration: none; color: inherit;">
         <table>
             <div>
                 <h2 class="month">
