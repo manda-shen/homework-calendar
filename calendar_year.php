@@ -12,25 +12,38 @@
 <?php
 date_default_timezone_set("Asia/Taipei");
 
-if(isset($_GET['year'])){
-    $year=$_GET['year'];
-}else{
-    $year=date("Y");
+// if(isset($_GET['year'])){
+//     $year=$_GET['year'];
+// }else{
+//     $year=date("Y");
+// }
+
+// if(isset($_GET['month'])){
+//     $month=$_GET['month'];
+// }else{
+//     $month=date("m");
+// }
+
+// if(isset($_GET['day'])){
+//     $day=$_GET['day'];
+// }else{
+//     $day=date("d");
+// }
+
+// 檢查是否有用戶通過表單提交日期
+if (isset($_GET['goto']) && !empty($_GET['goto'])) {
+    $gotoDate = strtotime($_GET['goto']); // 解析日期
+    $year = date("Y", $gotoDate);
+    $month = date("m", $gotoDate);
+    $day = date("d", $gotoDate);
+} else {
+    // 如果沒有提交日期，使用當前日期
+    $year = isset($_GET['year']) ? $_GET['year'] : date("Y");
+    $month = isset($_GET['month']) ? $_GET['month'] : date("m");
+    $day = isset($_GET['day']) ? $_GET['day'] : date("d");
 }
 
-if(isset($_GET['month'])){
-    $month=$_GET['month'];
-}else{
-    $month=date("m");
-}
-
-if(isset($_GET['day'])){
-    $day=$_GET['day'];
-}else{
-    $day=date("d");
-}
-
-
+// 計算上一個月和下一個月
 if($month-1<1){
     $prevMonth=12;
     $prevYear=$year-1;
@@ -83,6 +96,12 @@ include("holiday.php");
         <div class="back_today">
             <a href="./calendar_year.php">Today</a>
         </div>
+    </div>
+    <div class="goto">
+        <form action="" method="GET">
+            <input type="date" name="goto" value="<?= "$year-$month-$day"; ?>">
+            <input type="submit" value=" go to ">            
+        </form>
     </div>
 </div>
 <!-- .top結束 -->
@@ -233,6 +252,13 @@ if($month+1>12){
 ?>
 
 <!-- 年曆區塊 .box -->
+
+
+<details class="expand_collapse" id="myBox">
+    <summary>
+        年曆
+    </summary>
+
 <div class="box">
 
 <?php
@@ -282,6 +308,8 @@ for($i=0;$i<6;$i++){
 
 </div>
 <!-- .box結束 -->
+
+</details>
 
 <!-- </div> -->
 <!-- .allbody結束 -->
