@@ -1,10 +1,16 @@
+<?php
+// 取得目前的樣式表，如果未設定則使用預設的 "style.css"
+$cssFile = isset($_GET['theme']) ? $_GET['theme'] : 'style.css';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
-    <link rel="stylesheet" href="./style.css">
+    <!-- 動態設置 CSS 樣式表 -->
+    <link rel="stylesheet" href="./<?php echo htmlspecialchars($cssFile); ?>">
 </head>
 
 <body>
@@ -105,6 +111,12 @@ include("holiday.php");
             <input type="date" name="goto" value="<?= "$year-$month-$day"; ?>">
             <input type="submit" value=" go to ">            
         </form>
+    </div>
+    <div class="theme_list">
+        <div class="theme"><a href="?theme=style.css">預設樣式</a></div>
+        <div class="theme"><a href="?theme=white.css">white</a></div>
+        <div class="theme"><a href="?theme=pink.css">pink</a></div>
+  
     </div>
 </div>
 <!-- .top結束 -->
