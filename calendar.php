@@ -1,6 +1,6 @@
 <?php
 // 取得目前的樣式表，如果未設定則使用預設的 "style.css"
-$cssFile = isset($_GET['theme']) ? $_GET['theme'] : 'style.css';
+$theme = isset($_GET['theme']) ? $_GET['theme'] : 'style.css';
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ $cssFile = isset($_GET['theme']) ? $_GET['theme'] : 'style.css';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
     <!-- 動態設置 CSS 樣式表 -->
-    <link rel="stylesheet" href="./<?php echo htmlspecialchars($cssFile); ?>">
+    <link rel="stylesheet" href="./<?php echo htmlspecialchars($theme); ?>">
 </head>
 
 <body>
@@ -77,7 +77,7 @@ include("holiday.php");
 <div class="top">
     <div class="top1">    
         <div class="last_next">
-            <a href="calendar.php?year=<?=$year-1;?>&month=<?=$month;?>">前年</a>
+            <a href="calendar.php?year=<?=$year-1;?>&month=<?=$month;?>&theme=<?= $theme; ?>">前年</a>
         </div>
         <div class="top_year">
             <a href="#boxContent">
@@ -85,29 +85,30 @@ include("holiday.php");
             </a>
         </div>
         <div class="last_next">
-            <a href="calendar.php?year=<?=$year+1;?>&month=<?=$month;?>">明年</a>
+            <a href="calendar.php?year=<?=$year+1;?>&month=<?=$month;?>&theme=<?= $theme; ?>">明年</a>
         </div>    
     </div>
 
     <div class="top2">    
         <div class="last_next">
-            <a href="calendar.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
+            <a href="calendar.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>&theme=<?= $theme; ?>">＜</a>
         </div>
         <div class="top_month">
             <?php echo date("{$month}") ?>
         </div>
         <div class="last_next">
-            <a href="calendar.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
+            <a href="calendar.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>&theme=<?= $theme; ?>">＞</a>
         </div>    
     </div>
 
     <div class="dec_img">
         <div class="back_today">
-            <a href="./calendar.php">Today</a>
+        <a href="./calendar.php?theme=<?= $theme; ?>">Today</a>
         </div>
     </div>
     <div class="goto">
         <form action="" method="GET">
+            <input type="hidden" name="theme" value="<?= $theme; ?>"> <!-- 保留樣式表參數 -->
             <input type="date" name="goto" value="<?= "$year-$month-$day"; ?>">
             <input type="submit" value=" go to ">            
         </form>

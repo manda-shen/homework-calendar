@@ -37,13 +37,23 @@ body::before {
 .theme_list {
     display: flex;
     flex-direction: row;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .theme {
-    padding: 4px;
+    padding: 5px 8px;
     margin: 2px;
+    background-color: rgba(255, 255, 255, 0.3);
     border: 1.4px solid rgb(255, 255, 255);
     border-radius: 15px;
+
+}
+
+.theme :hover {
+    padding: 3px 3px;
+    margin: 2px;
+    border: 1.4px solid rgb(255, 255, 255);
+    border-radius: 10px;
 
 }
 
@@ -60,6 +70,8 @@ body::before {
     margin-bottom: 10px;
     display: flex;
     border-radius: 0px 20px 20px 0px;
+    border-right: 1.2px solid rgb(216, 186, 186);
+    border-bottom: 1.5px solid rgb(216, 186, 186);
     color: rgb(122, 121, 121);
     flex-direction: column;
     align-items: center;
@@ -115,14 +127,14 @@ body::before {
     width: 55%;
     font-size: 3.8em;
     font-weight: 1000;
-    color: rgb(134, 134, 134);
+    color: rgb(255, 255, 255);
     text-align: center;
 }
 
 
 .top_month {
     width: 55%;
-    color: rgb(134, 134, 134);
+    color: rgb(255, 255, 255);
     font-size: 3em;
     font-weight: 800;
     font-weight: border;
@@ -134,14 +146,14 @@ body::before {
 .top_month::after {
     content: "月";
     font-weight: 400;
-    color: rgb(134, 134, 134);
+    color: rgb(255, 255, 255);
     font-size: 20px;
     margin-left: -5px;
 }
 
 .dec_img {
     width: 70%;
-    aspect-ratio: 1.15 / 1;
+    aspect-ratio: 1.09 / 1;
     /* 高度是寬度的 1.37 倍 */
     background-image: url('./img/sharmp1.png');
     background-repeat: no-repeat;
@@ -256,7 +268,7 @@ body::before {
 
     .dec_img {
         width: 10%;
-        aspect-ratio: 1.15 / 1;
+        aspect-ratio: 1.09 / 1;
         /*高度是寬度的1.37倍*/
         max-width: none;
         border-radius: 0px !important;
@@ -316,7 +328,7 @@ body::before {
 
     .dec_img {
         width: 10%;
-        aspect-ratio: 1.15 / 1;
+        aspect-ratio: 1.09 / 1;
         /*高度是寬度的1.37倍*/
         max-width: none;
         border-radius: 0px;
@@ -612,26 +624,114 @@ html {
 
 
 details {
+    position: relative;
+    /* 讓偽元素的定位基於這個區塊 */
     scroll-margin-top: 20px;
     width: 100%;
-    height: 25px;
-    background-color: #777777;
+    height: 30px;
+    background-color: rgb(236, 214, 214);
+    border-top: 2px solid rgb(226, 205, 205);
+    border-bottom: 1px solid rgb(192, 175, 175);
     cursor: pointer;
     font-size: 18px;
     text-align: center;
-    color: white;
+    color: rgb(128, 127, 127);
+    padding: 2px;
     margin-top: 50px;
+    box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.3);
+    /* 炫光的初始靜態效果 */
+    overflow: hidden;
+    /* 確保炫光偽元素不會溢出邊界 */
+    animation: glow 3s infinite;
+    /* 炫光動畫，讓光影閃爍 */
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.2),
+            0px 0px 30px rgba(255, 255, 255, 0.1);
+        /* 柔和初始狀態 */
+    }
+
+    50% {
+        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.3),
+            0px 0px 50px rgba(255, 255, 255, 0.2);
+        /* 高亮狀態 */
+    }
+
+    100% {
+        box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.2),
+            0px 0px 30px rgba(255, 255, 255, 0.1);
+        /* 回到柔和狀態 */
+    }
+}
+
+/* 流動光線效果 */
+details::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -10%;
+    width: 120%;
+    height: 100%;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0.6),
+            rgba(255, 255, 255, 0.1));
+    filter: blur(15px);
+    /* 添加模糊效果 */
+    animation: flowing-light 5s linear infinite, moving-center 5s linear infinite;
+    z-index: 0;
+}
+
+/* 光線流動動畫 */
+@keyframes flowing-light {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 旋轉中心移動動畫 */
+@keyframes moving-center {
+    0% {
+        transform-origin: top left;
+        /* 左上角 */
+    }
+
+    25% {
+        transform-origin: center left;
+        /* 中間左側 */
+    }
+
+    50% {
+        transform-origin: center center;
+        /* 中心 */
+    }
+
+    75% {
+        transform-origin: center right;
+        /* 中間右側 */
+    }
+
+    100% {
+        transform-origin: bottom right;
+        /* 右下角 */
+    }
 }
 
 /* details 展開樣式 */
 details[open] {
     animation: fadeIn 0.3s ease-in-out;
-    box-shadow: 0 4px 12px rgba(61, 61, 61, 0.5);
+    box-shadow: 0 10px 20px rgba(156, 140, 140, 0.5);
 }
 
 .box {
     width: 1368px;
-    background: rgba(161, 181, 185, 0.3);
+    background: rgba(250, 214, 214, 0.3);
     backdrop-filter: blur(10px);
     border-radius: 25px;
     justify-self: center;
