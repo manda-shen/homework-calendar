@@ -33,29 +33,6 @@ body::before {
     /* 放置在背景圖片之上 */
 }
 
-.theme_list {
-    display: flex;
-    flex-direction: row;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.theme {
-    padding: 5px 8px;
-    margin: 2px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 1.4px solid rgb(209, 209, 209);
-    border-radius: 15px;
-
-}
-
-.theme :hover {
-    padding: 3px 3px;
-    margin: 2px;
-    border: 1.4px solid rgb(209, 209, 209);
-    border-radius: 10px;
-
-}
-
 .top {
     width: 20%;
     min-width: 250px;
@@ -211,9 +188,35 @@ body::before {
 .goto input {
     color: #666666;
     padding: 5px;
+    margin: 5px;
     border: 0.5px solid #6b6b6b;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.theme_list {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1em;
+    font-weight: 300;
+}
+
+.theme {
+    padding: 5px 8px;
+    margin: 3px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1.4px solid rgb(209, 209, 209);
+    border-radius: 15px;
+
+}
+
+.theme :hover {
+    padding: 3px 3px;
+    margin: 2px;
+    border: 1.4px solid rgb(209, 209, 209);
+    border-radius: 10px;
+
 }
 
 .calendar {
@@ -465,6 +468,7 @@ body::before {
         display: flex;
         flex-direction: column;
         border-radius: 0px;
+        border-right: none;
         margin-top: 0px;
         font-size: 10px;
     }
@@ -487,7 +491,7 @@ body::before {
     }
 
     .dec_img {
-        width: 15%;
+        width: 17%;
         aspect-ratio: 1 / 1.15;
         /*高度是寬度的1.37倍*/
         max-width: none;
@@ -509,6 +513,10 @@ body::before {
 
     .goto {
         margin-top: 10px;
+    }
+
+    .theme_list {
+        font-size: 1.4em;
     }
 
     .calendar {
@@ -553,12 +561,9 @@ body::before {
         display: flex;
         flex-direction: column;
         border-radius: 0px;
+        border-right: none;
         margin-top: 0px;
         font-size: 10px;
-        -webkit-border-radius: 0px;
-        -moz-border-radius: 0px;
-        -ms-border-radius: 0px;
-        -o-border-radius: 0px;
     }
 
     .top1 {
@@ -579,7 +584,7 @@ body::before {
     }
 
     .dec_img {
-        width: 15%;
+        width: 18%;
         aspect-ratio: 1 / 1.15;
         /*高度是寬度的1.37倍*/
         max-width: none;
@@ -608,6 +613,10 @@ body::before {
         padding: 20px;
         margin-top: 0px;
     }
+
+    .theme_list {
+        font-size: 1.4em;
+    }
 }
 
 /* 平滑滾動效果 */
@@ -619,12 +628,13 @@ html {
 details {
     scroll-margin-top: 20px;
     width: 100%;
-    height: 25px;
+    height: 30px;
     background-color: #777777;
     cursor: pointer;
     font-size: 18px;
     text-align: center;
     color: white;
+    padding-bottom: 3px;
     margin-top: 50px;
 }
 
@@ -632,6 +642,7 @@ details {
 details[open] {
     animation: fadeIn 0.3s ease-in-out;
     box-shadow: 0 4px 12px rgba(61, 61, 61, 0.5);
+    -webkit-animation: fadeIn 0.3s ease-in-out;
 }
 
 .box {

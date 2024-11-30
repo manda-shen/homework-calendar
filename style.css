@@ -26,34 +26,11 @@ body::before {
     left: 0;
     width: 100%;
     height: 3000px;
-    background-color: rgba(161, 181, 185, 0.3);
+    background-color: rgba(185, 201, 204, 0.3);
     pointer-events: none;
     /* 讓遮罩不影響點擊操作 */
     z-index: -1;
     /* 放置在背景圖片之上 */
-}
-
-.theme_list {
-    display: flex;
-    flex-direction: row;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-.theme {
-    padding: 5px 8px;
-    margin: 2px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border: 1.4px solid rgb(255, 255, 255);
-    border-radius: 15px;
-
-}
-
-.theme :hover {
-    padding: 3px 3px;
-    margin: 2px;
-    border: 1.4px solid rgb(255, 255, 255);
-    border-radius: 10px;
-
 }
 
 .top {
@@ -63,12 +40,14 @@ body::before {
     aspect-ratio: 1 / 2;
     /* 高度是寬度的 2 倍 */
     max-height: 720px;
-    background-color: rgba(161, 181, 185, 1);
+    background-color: rgb(185, 201, 204);
     padding: 30px 20px;
     margin-top: 50px;
     margin-bottom: 10px;
     display: flex;
     border-radius: 0px 20px 20px 0px;
+    border-right: 1.2px solid rgb(153, 168, 170);
+    border-bottom: 1.5px solid rgb(153, 168, 170);
     color: white;
     flex-direction: column;
     align-items: center;
@@ -211,9 +190,36 @@ body::before {
 .goto input {
     color: #28404A;
     padding: 5px;
+    margin: 5px;
     border: 0.5px solid #58747A;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.theme_list {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1em;
+    color: rgb(100, 113, 116);
+    font-weight: 300;
+}
+
+.theme {
+    padding: 5px 8px;
+    margin: 4px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 1.4px solid rgb(255, 255, 255);
+    border-radius: 15px;
+
+}
+
+.theme :hover {
+    padding: 3px 3px;
+    margin: 2px;
+    border: 1.4px solid rgb(255, 255, 255);
+    border-radius: 10px;
+
 }
 
 .calendar {
@@ -243,7 +249,7 @@ body::before {
     font-size: 13px;
     font-weight: 200;
     color: white;
-    background-color: rgba(161, 181, 185, 1);
+    background-color: rgb(153, 172, 175);
     padding: 5px 8px 5px 8px;
     border-radius: 10px;
     border: 0.1em solid rgba(0, 0, 0, 0.1);
@@ -252,7 +258,7 @@ body::before {
 
 .last_next:hover {
     background-color: #E0ECEF;
-    color: white;
+    color: rgb(116, 136, 139);
     transition: 0.2s;
 }
 
@@ -266,13 +272,14 @@ body::before {
 .show_date {
     width: 300px;
     color: white;
-    background-color: rgba(161, 181, 185, 1);
+    background-color: rgb(153, 172, 175);
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 0px;
     text-align: center;
     border-radius: 10px 10px 0px 0px;
-    border: 0.1em solid rgba(0, 0, 0, 0.1);
+    border: 0.5px solid rgba(61, 73, 75, 0.3);
+    border-bottom: 0px;
     font-family: '微軟正黑體';
     letter-spacing: 1.5px;
 }
@@ -282,7 +289,7 @@ body::before {
     min-width: 600px;
     aspect-ratio: 2 / 1.1;
     /* 寬度是高度的 2 倍 */
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(5px);
     padding: 15px;
     margin: 10px;
@@ -313,6 +320,8 @@ body::before {
     height: 5vw;
     max-height: 80px;
     min-height: 50px;
+    padding:1em;
+    font-size: 1.2em;
     border: 1px solid white;
     /* 設置儲存格之間的格線為白色 */
     border-left: 1px solid white;
@@ -396,7 +405,7 @@ body::before {
         min-width: 600px;
         aspect-ratio: 2 / 1.5 !important;
         /* 寬度是高度的 2 倍 */
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.3);
         backdrop-filter: blur(5px);
         padding: 15px;
         margin: 10px;
@@ -440,7 +449,7 @@ body::before {
         min-width: 600px;
         aspect-ratio: 2 / 1.8 !important;
         /* 寬度是高度的 2 倍 */
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.3);
         backdrop-filter: blur(5px);
         padding: 15px;
         margin: 10px;
@@ -467,6 +476,7 @@ body::before {
         display: flex;
         flex-direction: column;
         border-radius: 0px;
+        border-right: none;
         margin-top: 0px;
         font-size: 10px;
     }
@@ -513,6 +523,10 @@ body::before {
         margin-top: 10px;
     }
 
+    .theme_list {
+        font-size: 1.4em;
+    }
+
     .calendar {
         width: 100vw;
         min-width: 400px;
@@ -555,12 +569,9 @@ body::before {
         display: flex;
         flex-direction: column;
         border-radius: 0px;
+        border-right: none;
         margin-top: 0px;
         font-size: 10px;
-        -webkit-border-radius: 0px;
-        -moz-border-radius: 0px;
-        -ms-border-radius: 0px;
-        -o-border-radius: 0px;
     }
 
     .top1 {
@@ -610,6 +621,10 @@ body::before {
         padding: 20px;
         margin-top: 0px;
     }
+
+    .theme_list {
+        font-size: 1.4em;
+    }
 }
 
 /* 平滑滾動效果 */
@@ -621,13 +636,15 @@ html {
 details {
     scroll-margin-top: 20px;
     width: 100%;
-    height: 25px;
-    background-color: #58747A;
+    height: 30px;
+    background-color: rgb(153, 172, 175);
     cursor: pointer;
     font-size: 18px;
     text-align: center;
     color: white;
     margin-top: 50px;
+    border-top: 0.5px solid rgba(61, 73, 75, 0.3);
+    border-bottom: 0.5px solid rgba(61, 73, 75, 0.3);
 }
 
 /* details 展開樣式 */
@@ -638,7 +655,7 @@ details[open] {
 
 .box {
     width: 1368px;
-    background: rgba(161, 181, 185, 0.3);
+    background: rgba(185, 201, 204, 0.3);
     backdrop-filter: blur(10px);
     border-radius: 25px;
     justify-self: center;
@@ -678,7 +695,7 @@ details[open] {
 table {
     color: #28404A;
     border-collapse: collapse;
-    font-size: 0.8rem;
+    font-size: 0.7em;
 
 
 }
@@ -719,8 +736,9 @@ td {
 }
 
 .holidays {
-    color: #91a6ab;
-    font-size: 12px;
+    color: #81563c;
+    font-size: 1.1em;
+    font-weight: 300;
 }
 
 .grey-text {
@@ -734,5 +752,5 @@ td {
 
 .spDate-class {
     color: #6B346F;
-    font-size: 12px
+    font-size: 1.1em;
 }

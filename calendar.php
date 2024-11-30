@@ -115,8 +115,8 @@ include("holiday.php");
     </div>
     <div class="theme_list">
         <div class="theme"><a href="?theme=style.css">預設樣式</a></div>
-        <div class="theme"><a href="?theme=white.css">white</a></div>
-        <div class="theme"><a href="?theme=pink.css">pink</a></div>
+        <div class="theme"><a href="?theme=white.css">小雞白</a></div>
+        <div class="theme"><a href="?theme=pink.css">綿羊粉</a></div>
   
     </div>
 </div>

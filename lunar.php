@@ -1,584 +1,316 @@
 <?php
-
-//设置content-type
-header("Content-Type:text/html;charset=utf-8");
-//设置为中国时区
-$TimeZone = 'PRC';
-date_default_timezone_set($TimeZone);
-
-
-class Lunar
-{
-    private $animals = array("鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"); //生肖数组
-    private $curDate = null;    //当前阳历时间
-    private $year = 0;          //阳历年份
-    private $month = 0;         //阳历月份
-    private $day = 0;           //阳历日期
-    private $ylYear = 0;        //阴历年份
-    private $ylMonth = 0;       //阴历月份
-    private $ylDate = 0;        //阴历日期
-    private $ylDays = 0;        //当前日期是农历年的第多少天
-    private $leap = 0;          //代表闰几月
-    private $leapDays = 0;      //代表闰月的天数
-    private $difmonth = 0;      //当前时间距离参考时间相差多少月
-    private $difDay = 0;        //当前时间距离参考时间相差多少天
-    private $leapMonth = false; //当前阴历月份是否为闰月
-    private $D = 0.2422;        //节气计算参数D
-    //天干数组
-    private $tianGan = array("甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸");
-    //年份地支数组
-    private $yearDiZhi = array("子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥");
-    //月份地支数组
-    private $monthDiZhi = array("寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥", "子", "丑");
-    //1900年-2100年每年的农历月份信息。第一位表示闰月是大月（1）还是小月（0）。第二三四位转换成二进制表示每个月份是大月（1）还是小月（0）。最后一位表示闰月在第几月，为0表示没有闰月。
-    private $dateInfo = array(
-        0x04bd8, 0x04ae0, 0x0a570, 0x054d5, 0x0d260, 0x0d950, 0x16554, 0x056a0, 0x09ad0, 0x055d2,//1900-1909
-        0x04ae0, 0x0a5b6, 0x0a4d0, 0x0d250, 0x1d255, 0x0b540, 0x0d6a0, 0x0ada2, 0x095b0, 0x14977,//1910-1919
-        0x04970, 0x0a4b0, 0x0b4b5, 0x06a50, 0x06d40, 0x1ab54, 0x02b60, 0x09570, 0x052f2, 0x04970,//1920-1929
-        0x06566, 0x0d4a0, 0x0ea50, 0x06e95, 0x05ad0, 0x02b60, 0x186e3, 0x092e0, 0x1c8d7, 0x0c950,//1930-1939
-        0x0d4a0, 0x1d8a6, 0x0b550, 0x056a0, 0x1a5b4, 0x025d0, 0x092d0, 0x0d2b2, 0x0a950, 0x0b557,//1940-1949
-        0x06ca0, 0x0b550, 0x15355, 0x04da0, 0x0a5b0, 0x14573, 0x052b0, 0x0a9a8, 0x0e950, 0x06aa0,//1950-1959
-        0x0aea6, 0x0ab50, 0x04b60, 0x0aae4, 0x0a570, 0x05260, 0x0f263, 0x0d950, 0x05b57, 0x056a0,//1960-1969
-        0x096d0, 0x04dd5, 0x04ad0, 0x0a4d0, 0x0d4d4, 0x0d250, 0x0d558, 0x0b540, 0x0b6a0, 0x195a6,//1970-1979
-        0x095b0, 0x049b0, 0x0a974, 0x0a4b0, 0x0b27a, 0x06a50, 0x06d40, 0x0af46, 0x0ab60, 0x09570,//1980-1989
-        0x04af5, 0x04970, 0x064b0, 0x074a3, 0x0ea50, 0x06b58, 0x055c0, 0x0ab60, 0x096d5, 0x092e0,//1990-1999
-        0x0c960, 0x0d954, 0x0d4a0, 0x0da50, 0x07552, 0x056a0, 0x0abb7, 0x025d0, 0x092d0, 0x0cab5,//2000-2009
-        0x0a950, 0x0b4a0, 0x0baa4, 0x0ad50, 0x055d9, 0x04ba0, 0x0a5b0, 0x15176, 0x052b0, 0x0a930,//2010-2019
-        0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530,//2020-2029
-        0x05aa0, 0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45,//2030-2039
-        0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0,//2040-2049
-        0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20, 0x1a6c4, 0x0aae0,//2050-2059
-        0x0a2e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0, 0x0a6d0, 0x055d4,//2060-2069
-        0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4, 0x0a5b0, 0x052b0,//2070-2079
-        0x0b273, 0x06930, 0x07337, 0x06aa0, 0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160,//2080-2089
-        0x0e968, 0x0d520, 0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252,//2090-2099
-        0x0d520////2100
+ 
+class Lunar{
+    var $MIN_YEAR=1891;
+    var $MAX_YEAR=2100;
+    var $lunarInfo=array(
+        array(0,2,9,21936),array(6,1,30,9656),array(0,2,17,9584),array(0,2,6,21168),
+        array(5,1,26,43344),array(0,2,13,59728),array(0,2,2,27296),array(3,1,22,44368),
+        array(0,2,10,43856),array(8,1,30,19304),array(0,2,19,19168),array(0,2,8,42352),
+        array(5,1,29,21096),array(0,2,16,53856),array(0,2,4,55632),array(4,1,25,27304),
+        array(0,2,13,22176),array(0,2,2,39632),array(2,1,22,19176),array(0,2,10,19168),
+        array(6,1,30,42200),array(0,2,18,42192),array(0,2,6,53840),array(5,1,26,54568),
+        array(0,2,14,46400),array(0,2,3,54944),array(2,1,23,38608),array(0,2,11,38320),
+        array(7,2,1,18872),array(0,2,20,18800),array(0,2,8,42160),array(5,1,28,45656),
+        array(0,2,16,27216),array(0,2,5,27968),array(4,1,24,44456),array(0,2,13,11104),
+        array(0,2,2,38256),array(2,1,23,18808),array(0,2,10,18800),array(6,1,30,25776),
+        array(0,2,17,54432),array(0,2,6,59984),array(5,1,26,27976),array(0,2,14,23248),
+        array(0,2,4,11104),array(3,1,24,37744),array(0,2,11,37600),array(7,1,31,51560),
+        array(0,2,19,51536),array(0,2,8,54432),array(6,1,27,55888),array(0,2,15,46416),
+        array(0,2,5,22176),array(4,1,25,43736),array(0,2,13,9680),array(0,2,2,37584),
+        array(2,1,22,51544),array(0,2,10,43344),array(7,1,29,46248),array(0,2,17,27808),
+        array(0,2,6,46416),array(5,1,27,21928),array(0,2,14,19872),array(0,2,3,42416),
+        array(3,1,24,21176),array(0,2,12,21168),array(8,1,31,43344),array(0,2,18,59728),
+        array(0,2,8,27296),array(6,1,28,44368),array(0,2,15,43856),array(0,2,5,19296),
+        array(4,1,25,42352),array(0,2,13,42352),array(0,2,2,21088),array(3,1,21,59696),
+        array(0,2,9,55632),array(7,1,30,23208),array(0,2,17,22176),array(0,2,6,38608),
+        array(5,1,27,19176),array(0,2,15,19152),array(0,2,3,42192),array(4,1,23,53864),
+        array(0,2,11,53840),array(8,1,31,54568),array(0,2,18,46400),array(0,2,7,46752),
+        array(6,1,28,38608),array(0,2,16,38320),array(0,2,5,18864),array(4,1,25,42168),
+        array(0,2,13,42160),array(10,2,2,45656),array(0,2,20,27216),array(0,2,9,27968),
+        array(6,1,29,44448),array(0,2,17,43872),array(0,2,6,38256),array(5,1,27,18808),
+        array(0,2,15,18800),array(0,2,4,25776),array(3,1,23,27216),array(0,2,10,59984),
+        array(8,1,31,27432),array(0,2,19,23232),array(0,2,7,43872),array(5,1,28,37736),
+        array(0,2,16,37600),array(0,2,5,51552),array(4,1,24,54440),array(0,2,12,54432),
+        array(0,2,1,55888),array(2,1,22,23208),array(0,2,9,22176),array(7,1,29,43736),
+        array(0,2,18,9680),array(0,2,7,37584),array(5,1,26,51544),array(0,2,14,43344),
+        array(0,2,3,46240),array(4,1,23,46416),array(0,2,10,44368),array(9,1,31,21928),
+        array(0,2,19,19360),array(0,2,8,42416),array(6,1,28,21176),array(0,2,16,21168),
+        array(0,2,5,43312),array(4,1,25,29864),array(0,2,12,27296),array(0,2,1,44368),
+        array(2,1,22,19880),array(0,2,10,19296),array(6,1,29,42352),array(0,2,17,42208),
+        array(0,2,6,53856),array(5,1,26,59696),array(0,2,13,54576),array(0,2,3,23200),
+        array(3,1,23,27472),array(0,2,11,38608),array(11,1,31,19176),array(0,2,19,19152),
+        array(0,2,8,42192),array(6,1,28,53848),array(0,2,15,53840),array(0,2,4,54560),
+        array(5,1,24,55968),array(0,2,12,46496),array(0,2,1,22224),array(2,1,22,19160),
+        array(0,2,10,18864),array(7,1,30,42168),array(0,2,17,42160),array(0,2,6,43600),
+        array(5,1,26,46376),array(0,2,14,27936),array(0,2,2,44448),array(3,1,23,21936),
+        array(0,2,11,37744),array(8,2,1,18808),array(0,2,19,18800),array(0,2,8,25776),
+        array(6,1,28,27216),array(0,2,15,59984),array(0,2,4,27424),array(4,1,24,43872),
+        array(0,2,12,43744),array(0,2,2,37600),array(3,1,21,51568),array(0,2,9,51552),
+        array(7,1,29,54440),array(0,2,17,54432),array(0,2,5,55888),array(5,1,26,23208),
+        array(0,2,14,22176),array(0,2,3,42704),array(4,1,23,21224),array(0,2,11,21200),
+        array(8,1,31,43352),array(0,2,19,43344),array(0,2,7,46240),array(6,1,27,46416),
+        array(0,2,15,44368),array(0,2,5,21920),array(4,1,24,42448),array(0,2,12,42416),
+        array(0,2,2,21168),array(3,1,22,43320),array(0,2,9,26928),array(7,1,29,29336),
+        array(0,2,17,27296),array(0,2,6,44368),array(5,1,26,19880),array(0,2,14,19296),
+        array(0,2,3,42352),array(4,1,24,21104),array(0,2,10,53856),array(8,1,30,59696),
+        array(0,2,18,54560),array(0,2,7,55968),array(6,1,27,27472),array(0,2,15,22224),
+        array(0,2,5,19168),array(4,1,25,42216),array(0,2,12,42192),array(0,2,1,53584),
+        array(2,1,21,55592),array(0,2,9,54560)
     );
-    //固定节日日期数组
-    private $festival = array('0101', '0202', '0210', '0214', '0228', '0301', '0308', '0314', '0315', '0317', '0321', '0322', '0323', '0324', '0401', '0402', '0407', '0422', '0423', '0424', '0501', '0503', '0505', '0508', '0512', '0515', '0517', '0518', '0526', '0531', '0601', '0605', '0617', '0620', '0623', '0626', '0630', '0702', '0711', '0726', '0806', '0908', '0914', '0916', '0921', '0927', '1002', '1004', '1009', '1014', '1015', '1016', '1017', '1022', '1024', '1028', '1031', '1110', '1114', '1117', '1121', '1201', '1202', '1203', '1205', '1207', '1210', '1211', '1215', '1221', '1225', '1229', '0312', '0504', '0701', '0801', '0910');
-    //固定节日名称数组
-    private $festivalName = array('元旦', '世界濕地日', '國際氣象節', '情人節', '世界居住條件調查日', '國際海豹日', '國際勞動婦女節', '國際警察日', '國際消費者權益日', '國際航海日', '世界林業節', '世界水日', '世界氣象日', '世界防治結核病日', '國際愚人節', '國際兒童圖書日', '世界衛生日', '世界地球日', '世界圖書和版權日', '世界青年反對殖民主義日', '國際勞動節', '世界哮喘日', '全國碘缺乏病防治日', '世界紅十字日', '國際護士節', '國際家庭（諮詢）日', '世界電信日', '國際博物馆日', '世界向人體條件挑戰日', '世界無菸日', '國際兒童節', '世界環境日', '世界防止荒漠化和干旱日', '世界難民日', '國際奥林匹克日', '國際禁毒日', '世界青年聯歡節', '國際體育記者日', '世界人口日', '世界語（言）創立日', '國際电影節', '國際新聞工作者日', '世界清潔地球日', '國際臭氧層保護日', '國際和平日', '世界旅遊日', '國際和平（與民主自由）鬥爭日', '世界動物日', '世界郵政日', '世界標準日', '國際盲人節', '世界糧食日', '世界消除貧困日', '世界傳統醫藥日', '聯合國日', '世界男性健康日', '世界勤儉日', '世界青年節', '世界糖尿病日', '國際學生日', '世界電視日', '世界艾滋病日', '廢除一切形式奴役世界日', '世界殘疾人日', '國際志願人員日', '國際民航日', '世界人權日', '世界防治哮喘日', '世界强化免疫日', '國際篮球日', '聖誕節', '國際生物多樣性日', '植樹節', '青年節', '中國共產黨成立纪念日', '建軍節', '教師節');
-    //固定节日日期数组（农历节日）
-    private $festivalByLunar = array('1.1', '1.15', '2.2', '3.3', '5.5', '7.7', '8.15', '9.9', '10.1', '10.15', '12.8', '12.30');
-    //固定节日名称数组（农历节日）
-    private $festivalNameByLunar = array('春节', '元宵节', '土地诞（龙抬头）', '上巳节', '端午节', '七夕节', '中秋节', '重阳节', '寒衣节', '下元节', '腊八节', '除夕');
-    //节气计算参数C
-    private $C = array(3.87, 18.73, 5.63, 20.646, 4.81, 20.1, 5.52, 21.04, 5.678, 21.37, 7.108, 22.83, 7.5, 23.13, 7.646, 23.042, 8.318, 23.438, 7.438, 22.36, 7.18, 21.94, 5.4055, 20.12);
-    //节气数组
-    private $jieqi = array('立春', '雨水', '惊蛰', '春分', '清明', '谷雨', '立夏', '小满', '芒种', '夏至', '小暑', '大暑', '立秋', '处暑', '白露', '秋分', '寒露', '霜降', '立冬', '小雪', '大雪', '冬至', '小寒', '大寒');
-
-
-    //对象构造器
-    public function __construct($curData = null){
-        if (!empty($curData)) {
-            if (preg_match('/\d{4}-\d{1,2}-\d{1,2}/', $curData)) {
-                $this->curDate = $curData;
-                $this->year = intval(explode('-', $curData)[0]);
-                $this->month = intval(explode('-', $curData)[1]);
-                $this->day = intval(explode('-', $curData)[2]);
-            } else {
-                $this->curDate = date('Y-m-d');
-                $this->year = intval(date('Y'));
-                $this->month = intval(date('m'));
-                $this->day = intval(date('d'));
-                echo user_error('传入格式错误，将以当前日期计算' . date('Y-m-d'));
+ 
+ 
+    /** 
+    * 將陽曆轉換為陰曆 
+    * @param year 公曆-年 
+    * @param month 公曆-月 
+    * @param date 公曆-日 
+    */ 
+    function convertSolarToLunar($year='',$month='',$date=''){
+        $yearData=$this->lunarInfo[$year-$this->MIN_YEAR];
+        if($year==$this->MIN_YEAR&&$month<=2&&$date<=9){ 
+            return array(1891,'正月','初一','辛卯',1,1,'兔');
+        }
+        return $this->getLunarByBetween($year,$this->getDaysBetweenSolar($year,$month,$date,$yearData[1],$yearData[2]));
+    }
+ 
+    function convertSolarMonthToLunar($year,$month){
+        $yearData=$this->lunarInfo[$year-$this->MIN_YEAR];
+        if($year==$this->MIN_YEAR&&$month<=2&&$date<=9){ 
+            return array(1891,'正月','初一','辛卯',1,1,'兔');
+        }
+        $month_days_ary=array(31,28,31,30,31,30,31,31,30,31,30,31);
+        $dd=$month_days_ary[$month];
+        if($this->isLeapYear($year)&& $month==2)$dd++;
+        $lunar_ary=array();
+        for ($i=1;$i<$dd;$i++){
+            $array=$this->getLunarByBetween($year,$this->getDaysBetweenSolar($year,$month,$i,$yearData[1],$yearData[2]));
+            $array[]=$year.'-'.$month.'-'.$i;
+            $lunar_ary[$i]=$array;
+        }
+        return $lunar_ary;
+    }
+    /** 
+    * 將陰曆轉換為陽曆 
+    * @param year 陰曆-年 
+    * @param month 陰曆-月，閏月處理：例如如果當年閏五月，那麼第二個五月就傳六月，相當於陰曆有13個月，只是有的時候第13個月的天數為0 
+    * @param date 陰曆-日 
+    */  
+    function convertLunarToSolar($year,$month,$date){ 
+        $yearData=$this->lunarInfo[$year-$this->MIN_YEAR];
+        $between=$this->getDaysBetweenLunar($year,$month,$date);
+        $res=mktime(0,0,0,$yearData[1],$yearData[2],$year);
+        $res=date('Y-m-d',$res+$between*24*60*60);
+        $day=explode('-',$res);
+        $year=$day[0];
+        $month=$day[1];
+        $day=$day[2];
+        return array($year,$month,$day);
+    }
+    /** 
+    * 判斷是否是閏年  
+    * @param year 
+    */ 
+    function isLeapYear($year){ 
+        return (($year%4==0&&$year%100!=0)||($year%400==0));
+    }
+    /** 
+    * 獲取干支纪年 
+    * @param year 
+    */ 
+    function getLunarYearName($year){ 
+        $sky=array('庚','辛','壬','癸','甲','乙','丙','丁','戊','己');
+        $earth=array('申','酉','戌','亥','子','丑','寅','卯','辰','巳','午','未');
+        $year=$year.'';
+        return $sky[$year[3]].$earth[$year%12];
+    }
+    /** 
+    * 根據陰曆年獲取生肖 
+    * @param year 陰曆年 
+    */ 
+    function getYearZodiac($year){ 
+        $zodiac=array('猴','雞','狗','豬','鼠','牛','虎','兔','龍','蛇','馬','羊');
+        return $zodiac[$year%12];
+    }
+    /** 
+    * 獲取陽曆月份的天數 
+    * @param year 陽曆-年 
+    * @param month 陽曆-月 
+    */
+    function getSolarMonthDays($year,$month){ 
+        $monthHash=array('1'=>31,'2'=>$this->isLeapYear($year)?29:28,'3'=>31,'4'=>30,'5'=>31,'6'=>30,'7'=>31,'8'=>31,'9'=>30,'10'=>31,'11'=>30,'12'=>31);
+        return $monthHash["$month"];
+    }
+    /** 
+    * 獲取陰曆月份的天數 
+    * @param year 陰曆-年 
+    * @param month 陰曆-月，從一月開始 
+    */ 
+    function getLunarMonthDays($year,$month){ 
+        $monthData=$this->getLunarMonths($year);
+        return $monthData[$month-1];
+    }
+    /** 
+    * 獲取陰曆每月的天數的數組 
+    * @param year 
+    */ 
+    function getLunarMonths($year){ 
+        $yearData=$this->lunarInfo[$year-$this->MIN_YEAR];
+        $leapMonth=$yearData[0];
+        $bit=decbin($yearData[3]);
+        for ($i=0;$i<strlen($bit);$i ++){
+            $bitArray[$i]=substr($bit,$i,1);
+        }
+        for($k=0,$klen=16-count($bitArray);$k<$klen;$k++){ 
+            array_unshift($bitArray,'0');
+        }
+        $bitArray=array_slice($bitArray,0,($leapMonth==0?12:13));
+        for($i=0;$i<count($bitArray);$i++){ 
+            $bitArray[$i]=$bitArray[$i] + 29;
+        }
+        return $bitArray;
+    }
+    /** 
+    * 獲取農曆每年的天數 
+    * @param year 農曆年份 
+    */ 
+    function getLunarYearDays($year){ 
+        $yearData=$this->lunarInfo[$year-$this->MIN_YEAR];
+        $monthArray=$this->getLunarYearMonths($year);
+        $len=count($monthArray);
+        return ($monthArray[$len-1]==0?$monthArray[$len-2]:$monthArray[$len-1]);
+    }
+    function getLunarYearMonths($year){//debugger;
+        $monthData=$this->getLunarMonths($year);
+        $res=array();
+        $temp=0;
+        $yearData=$this->lunarInfo[$year-$this->MIN_YEAR];
+        $len=($yearData[0]==0?12:13);
+        for($i=0;$i<$len;$i++){ 
+            $temp=0;
+            for($j=0;$j<=$i;$j++){ 
+                $temp+=$monthData[$j];
             }
-        } else {
-            $this->curDate = date('Y-m-d');
-            $this->year = intval(date('Y'));
-            $this->month = intval(date('m'));
-            $this->day = intval(date('d'));
+            array_push($res,$temp);
         }
-        $this->init();
+        return $res;
     }
-
-    //获取私有属性：阳历年份
-    function getYear(){
-        return $this->year;
+    /** 
+    * 獲取閏月 
+    * @param year 陰曆年份 
+    */ 
+    function getLeapMonth($year){ 
+        $yearData=$this->lunarInfo[$year-$this->MIN_YEAR];
+        return $yearData[0];
     }
-
-    //获取私有属性：阳历月份
-    function getMonth(){
-        return $this->month;
-    }
-
-    //获取私有属性：阳历日期
-    function getDay(){
-        return $this->day;
-    }
-
-    //获取私有属性：阴历年份
-    function getLunarYear(){
-        return $this->ylYear;
-    }
-
-    //获取私有属性：阴历月份
-    function getLunarMonth(){
-        return $this->ylMonth;
-    }
-
-    //获取私有属性：阴历日期
-    function getLunarDay(){
-        return $this->ylDate;
-    }
-
-    //获取阳历对应的阴历年份月份和日期
-    public function init(){
-        $basedate = '1900-1-31'; //参照日期,农历对应为1900年正月初一
-        $dateTime = date_create($basedate);
-        $curTime = date_create($this->curDate);
-        $offset = date_diff($dateTime,$curTime)->format('%a');
-        $this->difDay = $offset;
-        $offset += 1;//只能使用ceil，不能使用intval或者是floor,因为1900-1-31为正月初一，故需要加1
-        for ($i = 1900; $i <= 2100 && $offset > 0; $i++) {
-            $temp = $this->getYearDays($i); //计算i年有多少天
-            $offset -= $temp;
-            $this->difmonth += 12;
-            //判断该年否存在闰月
-            if ($this->leapMonth($i) > 0) {
-                $this->difmonth += 1;
-            }
+    /** 
+    * 計算陰曆日期與正月初一相隔的天數  
+    * @param year http://www.codetc.com/
+    * @param month 
+    * @param date 
+    */ 
+    function getDaysBetweenLunar($year,$month,$date){ 
+        $yearMonth=$this->getLunarMonths($year);
+        $res=0;
+        for($i=1;$i<$month;$i++){ 
+            $res+=$yearMonth[$i-1];
         }
-
-        if ($offset <= 0) {
-            $offset += $temp;
-            $i--;
-            $this->difmonth -= 12;
-        }
-        if ($this->leapMonth($i) > 0) {
-            $this->difmonth -= 1;
-        }
-        $this->ylDays = $offset;
-        //此时$offset代表是农历该年的第多少天
-        $this->ylYear = $i;//农历哪一年
-        //计算月份，依次减去1~12月份的天数，直到offset小于下个月的天数
-        $curMonthDays = $this->monthDays($this->ylYear, 1);
-        //判断是否该年是否存在闰月以及闰月的天数
-        $this->leap = $this->leapMonth($this->ylYear);
-        if ($this->leap != 0) {
-            $this->leapDays = $this->leapDays($this->ylYear);
-        }
-
-        for ($i = 1; $i < 13 && $curMonthDays < $offset; $curMonthDays = $this->monthDays($this->ylYear, ++$i)) {
-            if ($this->leap == $i) { //闰月
-                $offset -= $curMonthDays;
-                $this->difmonth += 1;
-                $this->leapMonth = true;
-                if ($offset > $this->leapDays) {
-                    $this->leapMonth = false;
-                    $offset -= $this->leapDays;
-                    $this->difmonth += 1;
-                } else {
+        $res+=$date-1;
+        return $res;
+    }
+    /** 
+    * 計算2個陽曆日期之間的天數 
+    * @param year 陽曆年 
+    * @param cmonth 
+    * @param cdate 
+    * @param dmonth 陰曆正月對應的陽曆月份 
+    * @param ddate 陰曆初一對應的陽曆天數 
+    */ 
+    function getDaysBetweenSolar($year,$cmonth,$cdate,$dmonth,$ddate){ 
+        $a=mktime(0,0,0,$cmonth,$cdate,$year);
+        $b=mktime(0,0,0,$dmonth,$ddate,$year);
+        return ceil(($a-$b)/24/3600);
+    }
+    /** 
+    * 根據距離正月初一的天數計算陰曆日期 
+    * @param year 陽曆年 
+    * @param between 天數 
+    */ 
+    function getLunarByBetween($year,$between){//debugger;
+        $lunarArray=array();
+        $yearMonth=array();
+        $t=0;
+        $e=0;
+        $leapMonth=0;
+        $m='';
+        if($between==0){ 
+            array_push($lunarArray,$year,'正月','初一');
+            $t=1;
+            $e=1;
+        }else{ 
+            $year=$between>0? $year : ($year-1);
+            $yearMonth=$this->getLunarYearMonths($year);
+            $leapMonth=$this->getLeapMonth($year);
+            $between=$between>0?$between : ($this->getLunarYearDays($year)+$between);
+            for($i=0;$i<13;$i++){ 
+                if($between==$yearMonth[$i]){ 
+                    $t=$i+2;
+                    $e=1;
+                    break;
+                }else if($between<$yearMonth[$i]){ 
+                    $t=$i+1;
+                    $e=$between-(empty($yearMonth[$i-1])?0:$yearMonth[$i-1])+1;
                     break;
                 }
-            } else {
-                $offset -= $curMonthDays;
-                $this->difmonth += 1;
+            }
+            $m=($leapMonth!=0&&$t==$leapMonth+1)?('閏'.$this->getCapitalNum($t- 1,true)):$this->getCapitalNum(($leapMonth!=0&&$leapMonth+1<$t?($t-1):$t),true);
+            array_push($lunarArray,$year,$m,$this->getCapitalNum($e,false));
+        }
+        array_push($lunarArray,$this->getLunarYearName($year));// 天干地支 
+        array_push($lunarArray,$t,$e);
+        array_push($lunarArray,$this->getYearZodiac($year));// 12生肖 
+        array_push($lunarArray,$leapMonth);// 閏幾月 
+        return $lunarArray;
+    }
+    /** 
+    * 獲取數字的陰曆叫法 
+    * @param num 數字 
+    * @param isMonth 是否是月份的数字 
+    */ 
+    function getCapitalNum($num,$isMonth){ 
+        $isMonth=$isMonth||false;
+        $dateHash=array('0'=>'','1'=>'一','2'=>'二','3'=>'三','4'=>'四','5'=>'五','6'=>'六','7'=>'七','8'=>'八','9'=>'九','10'=>'十 ');
+        $monthHash=array('0'=>'','1'=>'正月','2'=>'二月','3'=>'三月','4'=>'四月','5'=>'五月','6'=>'六月','7'=>'七月','8'=>'八月','9'=>'九月','10'=>'十月','11'=>'冬月','12'=>'臘月');
+        $res='';
+        if($isMonth){ 
+            $res=$monthHash[$num];
+        }else{ 
+            if($num<=10){ 
+                $res='初'.$dateHash[$num];
+            }else if($num>10&&$num<20){ 
+                $res='十'.$dateHash[$num-10];
+            }else if($num==20){ 
+                $res="二十";
+            }else if($num>20&&$num<30){ 
+                $res="廿".$dateHash[$num-20];
+            }else if($num==30){ 
+                $res="三十";
             }
         }
-
-        $this->ylMonth = $i;
-        $this->ylDate = $offset;
-    }
-
-    //获取农历某年的总天数
-    public function getYearDays($year){
-        $sum = 348;//12*29=348,不考虑小月的情况下
-        for ($i = 0x8000; $i >= 0x10; $i >>= 1) {
-            $sum += ($this->dateInfo[$year - 1900] & $i) ? 1 : 0;
-        }
-        return ($sum + $this->leapDays($year));
-    }
-
-    //获取农历某年闰月的天数
-    public function leapDays($year){
-        if ($this->leapMonth($year)) {
-            return (($this->dateInfo[$year - 1900] & 0x10000) ? 30 : 29);
-        } else {
-            return (0);
-        }
-    }
-
-    //获取农历某年的闰月为几月
-    public function leapMonth($year = null){
-        $year = $year? $year : $this->ylYear;
-        return ($this->dateInfo[$year - 1900] & 0xf);
-    }
-
-    //获取农历某年某月的天数
-    public function monthDays($year, $month){
-        return (($this->dateInfo[$year - 1900] & (0x10000 >> $month)) ? 30 : 29);
-    }
-
-    //获取阳历对应的阴历文本格式（例：二月初一）
-    public function getLunarTime(){
-        if ($this->leapMonth) { //是闰月
-            $dateStr = '闰';
-        } else { //不是闰月
-            $dateStr = '';
-        }
-        $tmp = array('初', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '廿');
-        if ($this->ylMonth > 10) {
-            $m2 = intval($this->ylMonth - 10); //十位
-            if ($m2 === 1) {
-                $dateStr .= '冬月';
-            }
-            if ($m2 === 2) {
-                $dateStr .= '腊月';
-            }
-        } elseif ($this->ylMonth == 1) {
-            if ($dateStr === '闰') {
-                $dateStr = '闰一月';
-            } else {
-                $dateStr .= '正月';
-            }
-
-        } else {
-            $dateStr .= $tmp[$this->ylMonth] . '月';
-        }
-
-        if ($this->ylDate < 11) {
-            $dateStr .= '初' . $tmp[$this->ylDate];
-        } else {
-            $m1 = intval($this->ylDate / 10);
-            if ($m1 != 3) {
-                $dateStr .= ($m1 == 1) ? '十' : '廿';
-                $m2 = $this->ylDate % 10;
-                if ($m2 == 0) {
-                    $dateStr .= '十';
-                } else {
-                    $dateStr .= $tmp[$m2];
-                }
-            } else {
-                $dateStr .= '三十';
-            }
-        }
-        return $dateStr;
-    }
-
-    //获取该年对应的天干地支年
-    public function getYearGanZhi($ylYear = null){
-        $ylYear = $ylYear ? $ylYear : $this->ylYear;
-        return $this->getYearTianGan($ylYear) . $this->getYearDiZhi($ylYear);
-    }
-
-    //获取该年对应的年天干
-    public function getYearTianGan($ylYear = null){
-        $ylYear = $ylYear ? $ylYear : $this->ylYear;
-        return $this->tianGan[($ylYear - 4) % 10];
-    }
-
-    //获取该年对应的年地支
-    public function getYearDiZhi($ylYear = null){
-        $ylYear = $ylYear ? $ylYear : $this->ylYear;
-        return $this->yearDiZhi[($ylYear - 4) % 12];
-    }
-
-    //获取该年对应的天干地支月
-    public function getMonthGanZhi($ylYear = null, $ylMonth = null){
-        $ylYear = $ylYear ? $ylYear : $this->ylYear;
-        $ylMonth = $ylMonth ? $ylMonth : $this->ylMonth;
-        return $this->getMonthTianGan($ylYear) . $this->getMonthDiZhi($ylMonth);
-    }
-
-    //获取该年对应的月天干
-    public function getMonthTianGan($ylYear = null){
-        $ylYear = $ylYear ? $ylYear : $this->ylYear;
-        $jieQi = array();
-        $yearTianGan = $this->getYearTianGan($ylYear);
-        switch ($yearTianGan) {
-            case '甲':
-            case '己':
-                $monthFirstTianGan = '丙';
-                break;
-            case '乙':
-            case '庚':
-                $monthFirstTianGan = '戊';
-                break;
-            case '丙':
-            case '辛':
-                $monthFirstTianGan = '庚';
-                break;
-            case '丁':
-            case '壬':
-                $monthFirstTianGan = '壬';
-                break;
-            case '戊':
-            case '癸':
-                $monthFirstTianGan = '甲';
-                break;
-        }
-        for ($i = 1; $i < 13; $i++) {
-            array_push($jieQi, $this->getJieQi(null, $i));
-        }
-        array_push($jieQi, $this->getJieQi($this->year + 1, 1));
-        switch (true) {
-            case ($this->month == 1 && $this->day >= $jieQi[0]['小寒']):
-                $offset = -1;
-                break;
-            case ($this->month == 1 && $this->day < $jieQi[0]['小寒']):
-                $offset = -2;
-                break;
-            case ($this->month == 2 && $this->day >= $jieQi[1]['立春']):
-                $offset = 0;
-                break;
-            case ($this->month == 2 && $this->day < $jieQi[1]['立春']):
-                $offset = -1;
-                break;
-            case ($this->month == 3 && $this->day >= $jieQi[2]['惊蛰']):
-                $offset = 1;
-                break;
-            case ($this->month == 3 && $this->day < $jieQi[2]['惊蛰']):
-                $offset = 0;
-                break;
-            case ($this->month == 4 && $this->day >= $jieQi[3]['清明']):
-                $offset = 2;
-                break;
-            case ($this->month == 4 && $this->day < $jieQi[3]['清明']):
-                $offset = 1;
-                break;
-            case ($this->month == 5 && $this->day >= $jieQi[4]['立夏']):
-                $offset = 3;
-                break;
-            case ($this->month == 5 && $this->day < $jieQi[4]['立夏']):
-                $offset = 2;
-                break;
-            case ($this->month == 6 && $this->day >= $jieQi[5]['芒种']):
-                $offset = 4;
-                break;
-            case ($this->month == 6 && $this->day < $jieQi[5]['芒种']):
-                $offset = 3;
-                break;
-            case ($this->month == 7 && $this->day >= $jieQi[6]['小暑']):
-                $offset = 5;
-                break;
-            case ($this->month == 7 && $this->day < $jieQi[6]['小暑']):
-                $offset = 4;
-                break;
-            case ($this->month == 8 && $this->day >= $jieQi[7]['立秋']):
-                $offset = 6;
-                break;
-            case ($this->month == 8 && $this->day < $jieQi[7]['立秋']):
-                $offset = 5;
-                break;
-            case ($this->month == 9 && $this->day >= $jieQi[8]['白露']):
-                $offset = 7;
-                break;
-            case ($this->month == 9 && $this->day < $jieQi[8]['白露']):
-                $offset = 6;
-                break;
-            case ($this->month == 10 && $this->day >= $jieQi[9]['寒露']):
-                $offset = 8;
-                break;
-            case ($this->month == 10 && $this->day < $jieQi[9]['寒露']):
-                $offset = 7;
-                break;
-            case ($this->month == 11 && $this->day >= $jieQi[10]['立冬']):
-                $offset = 9;
-                break;
-            case ($this->month == 11 && $this->day < $jieQi[10]['立冬']):
-                $offset = 8;
-                break;
-            case ($this->month == 12 && $this->day >= $jieQi[11]['大雪']):
-                $offset = 10;
-                break;
-            case ($this->month == 12 && $this->day < $jieQi[11]['大雪']):
-                $offset = 9;
-                break;
-        }
-        if ($offset + array_search($monthFirstTianGan, $this->tianGan) > 9) {
-            $monthTianGan = $this->tianGan[$offset + array_search($monthFirstTianGan, $this->tianGan) - 10];
-        } else {
-            $monthTianGan = $this->tianGan[$offset + array_search($monthFirstTianGan, $this->tianGan)];
-        }
-        return $monthTianGan;
-    }
-
-    //获取该年对应的月地支
-    public function getMonthDiZhi($ylMonth = null){
-        $ylMonth = $ylMonth ? $ylMonth : $this->ylMonth;
-        return $this->monthDiZhi[$ylMonth - 1];
-    }
-
-    //获取该年对应的天干地支日
-    public function getDayGanZhi(){
-        $gan = $this->tianGan[$this->difDay % 10];
-        $zhi = $this->yearDiZhi[($this->difDay + 4) % 12];
-        return $gan . $zhi;
-    }
-
-    //获取该年的生肖
-    public function getAnimals(){
-        return $this->animals[($this->ylYear - 1900) % 12];
-    }
-
-    //获取当天的节日
-    public function getFestival(){
-        $curTime = new DateTime($this->curDate);
-        $date = $curTime->format('md');
-        $temp = array();
-        foreach ($this->festival as $key => $val) {
-            if ($val === $date) {
-                array_push($temp, $this->festivalName[$key]);
-            }
-        }
-        $lunarDate = $this->ylMonth . '.' . $this->ylDate;
-        foreach ($this->festivalByLunar as $index => $item) {
-            if ($item === $lunarDate) {
-                array_push($temp, $this->festivalNameByLunar[$index]);
-            }
-        }
-        $qingming = (int)$this->getJieQi(null, 4)['清明'];
-        if ($this->day === $qingming && $this->month === 4) {
-            array_push($temp, '清明节');
-        }
-        return $temp;
-    }
-
-    //获取相近的节气
-    public function getJieQi($year = null, $month = null){
-        //获取年份的后两位数
-        $year = $year ? $year % 100 : $this->year % 100;
-
-        //获取月份
-        $month = $month ? $month : $this->month;
-
-        //月份不为1的时候
-        if ($month > 1) {
-            $min = 2 * $month - 4;
-            $max = 2 * $month - 3;
-
-        } else { //月份为1的时候
-            $min = 22;
-            $max = 23;
-        }
-
-        //匹配意外的日期
-        if ($this->year === 2026 && $month === 2) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) - 1
-            );
-        }
-        if ($this->year === 2084 && $month === 3) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-        if ($this->year === 1911 && $month === 5) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) + 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if ($this->year === 2008 && $month === 5) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-        if ($this->year === 1902 && $month === 6) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) + 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if ($this->year === 1928 && $month === 6) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-        if (($this->year === 1925 || $this->year === 2016) && $month === 7) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) + 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if ($this->year === 1922 && $month === 7) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-        if ($this->year === 2002 && $month === 8) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) + 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if ($this->year === 1927 && $month === 9) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) + 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if ($this->year === 1942 && $month === 9) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-        if ($this->year === 2089 && $month === 10) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-        if ($this->year === 2089 && $month === 11) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) + 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if ($this->year === 1978 && $month === 11) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-        if ($this->year === 1954 && $month === 12) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) + 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if (($this->year === 1918 || $this->year === 2021) && $month === 7) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) - 1
-            );
-        }
-        if ($this->year === 1982 && $month === 1) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) + 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if ($this->year === 2019 && $month === 1) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4) - 1,
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-            );
-        }
-        if ($this->year === 2082 && $month === 1) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-        if ($this->year === 1994 && $month === 1) {
-            return array(
-                $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-                $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4) + 1
-            );
-        }
-
-        //无意外的时候返回正常的数据
-        return array(
-            $this->jieqi[$min] => intval($year * $this->D + $this->C[$min]) - floor(($year - 1) / 4),
-            $this->jieqi[$max] => intval($year * $this->D + $this->C[$max]) - floor(($year - 1) / 4)
-        );
+        return $res;
     }
 }
+?>
+
+<?php
+function getLunarYearName($year) { 
+    $sky = array('甲','乙','丙','丁','戊','己','庚','辛','壬','癸');
+    $earth = array('子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥');
+    
+    $skyIndex = ($year - 4) % 10; // 天干公式
+    $earthIndex = ($year - 4) % 12; // 地支公式
+    
+    return $sky[$skyIndex] . $earth[$earthIndex];
+}
+
+?>
