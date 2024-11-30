@@ -39,10 +39,10 @@ body::before {
     max-width: 350px;
     aspect-ratio: 1 / 2;
     /* 高度是寬度的 2 倍 */
-    max-height: 720px;
+    max-height: 900px;
     background-color: rgb(255, 255, 255);
     padding: 30px 20px;
-    margin-top: 50px;
+    margin-top: 82px;
     margin-bottom: 10px;
     display: flex;
     border-radius: 0px 20px 20px 0px;
@@ -274,6 +274,7 @@ body::before {
     text-align: center;
     border-radius: 10px 10px 0px 0px;
     border: 0.1em solid rgba(0, 0, 0, 0.1);
+    border-bottom: 0px;
     font-family: '微軟正黑體';
     letter-spacing: 1.5px;
 }
@@ -293,9 +294,6 @@ body::before {
     box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* 當視窗寬度小於768px，設置固定寬度630px */
-
-
 .main_table table {
     width: 100%;
     aspect-ratio: 2 / 1.1;
@@ -314,6 +312,8 @@ body::before {
     height: 5vw;
     max-height: 80px;
     min-height: 50px;
+    padding:0.2em 0.4em ;
+    font-size: 1.3em;
     border: 1px solid rgb(216, 216, 216);
     /* 設置儲存格之間的格線為白色 */
     border-left: 1px solid rgb(216, 216, 216);
@@ -342,14 +342,19 @@ body::before {
     font-weight: 300;
 }
 
-
 .per_day {
+    position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 西元日期靠上，陰曆日期靠下 */
+    align-items: self-end; /* 居中對齊 */
+    padding: 5px;
 }
 
 .week_mark td {
-    height: 30px;
+    height: 40px;
     text-align: center;
 }
 
@@ -729,7 +734,8 @@ td {
 
 .holidays {
     color: #887e5c;
-    font-size: 12px;
+    font-size: 0.9em;
+    font-weight: 300;
 }
 
 .grey-text {
@@ -744,4 +750,11 @@ td {
 .spDate-class {
     color: #6B346F;
     font-size: 12px
+}
+
+.lunar_date {
+    font-size: 0.8em;
+    font-weight: 300;
+    color: #a0a0a0;
+    order: 5;
 }

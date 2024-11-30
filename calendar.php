@@ -68,6 +68,8 @@ if($month+1>12){
 }
 
 include("holiday.php");
+include("Lunar.php");
+$lunar = new Lunar();
 
 ?>
 <!-- 全區顯示區塊 .allbody -->
@@ -176,6 +178,14 @@ include("holiday.php");
                         echo "<td class='$theMonth $isToday $isWeekend $spDateClass' data-date='$formattedDate'>";
                         echo "<a href='#'><div class='per_day'>";
                         echo date("j", $start_stamp);
+
+                        // 轉換為陰曆並顯示
+                        $lunarDate = $lunar->convertSolarToLunar(
+                            date("Y", $start_stamp),
+                            date("m", $start_stamp),
+                            date("d", $start_stamp)
+                        );
+                        echo "<br><span class='lunar_date'>{$lunarDate[1]}{$lunarDate[2]}</span>"; // 陰曆月份和日期
                     
                         if(isset($spDate[date("Y-m-d",$start_stamp)])){
                             echo "<br>{$spDate[date("Y-m-d",$start_stamp)]}";

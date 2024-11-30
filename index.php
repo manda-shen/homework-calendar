@@ -18,23 +18,6 @@ $theme = isset($_GET['theme']) ? $_GET['theme'] : 'style.css';
 <?php
 date_default_timezone_set("Asia/Taipei");
 
-// if(isset($_GET['year'])){
-//     $year=$_GET['year'];
-// }else{
-//     $year=date("Y");
-// }
-
-// if(isset($_GET['month'])){
-//     $month=$_GET['month'];
-// }else{
-//     $month=date("m");
-// }
-
-// if(isset($_GET['day'])){
-//     $day=$_GET['day'];
-// }else{
-//     $day=date("d");
-// }
 
 // 檢查是否有表單提交日期
 if (isset($_GET['goto']) && !empty($_GET['goto'])) {
@@ -68,6 +51,8 @@ if($month+1>12){
 }
 
 include("holiday.php");
+include("Lunar.php");
+$lunar = new Lunar();
 
 ?>
 <!-- 全區顯示區塊 .allbody -->
@@ -115,8 +100,8 @@ include("holiday.php");
     </div>
     <div class="theme_list">
         <div class="theme"><a href="?theme=style.css">預設樣式</a></div>
-        <div class="theme"><a href="?theme=white.css">white</a></div>
-        <div class="theme"><a href="?theme=pink.css">pink</a></div>
+        <div class="theme"><a href="?theme=white.css">小雞白</a></div>
+        <div class="theme"><a href="?theme=pink.css">綿羊粉</a></div>
   
     </div>
 </div>
@@ -176,6 +161,14 @@ include("holiday.php");
                         echo "<td class='$theMonth $isToday $isWeekend $spDateClass' data-date='$formattedDate'>";
                         echo "<a href='#'><div class='per_day'>";
                         echo date("j", $start_stamp);
+
+                        // 轉換為陰曆並顯示
+                        $lunarDate = $lunar->convertSolarToLunar(
+                            date("Y", $start_stamp),
+                            date("m", $start_stamp),
+                            date("d", $start_stamp)
+                        );
+                        echo "<br><span class='lunar_date'>{$lunarDate[1]}{$lunarDate[2]}</span>"; // 陰曆月份和日期
                     
                         if(isset($spDate[date("Y-m-d",$start_stamp)])){
                             echo "<br>{$spDate[date("Y-m-d",$start_stamp)]}";
