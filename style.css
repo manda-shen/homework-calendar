@@ -205,6 +205,7 @@ body::before {
 .goto form {
     color: #28404A;
     padding: 20px;
+    margin-top: 0px;
 }
 
 .goto input {
@@ -213,140 +214,6 @@ body::before {
     border: 0.5px solid #58747A;
     border-radius: 5px;
     cursor: pointer;
-}
-
-@media (max-width: 1533px) {
-    .top {
-        font-size: 15px;
-    }
-}
-
-@media (max-width: 1355px) {
-    .top {
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 1259px) {
-    .top {
-        font-size: 11px;
-    }
-}
-
-@media (max-width: 991px) {
-    .top {
-        width: 100% !important;
-        height: 25vh !important;
-        min-width: none;
-        max-width: none;
-        display: flex;
-        flex-direction: column;
-        border-radius: 0px;
-        margin-top: 0px;
-        font-size: 10px;
-    }
-
-    .top1 {
-        width: 50% !important;
-        height: 50px !important;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-
-    .top2 {
-        width: 50% !important;
-        height: 50px !important;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin-top: 20px;
-        margin-bottom: -50px;
-    }
-
-    .dec_img {
-        width: 10%;
-        aspect-ratio: 1 / 1.37;
-        /*高度是寬度的1.37倍*/
-        max-width: none;
-        border-radius: 0px !important;
-        align-self: flex-start;
-        margin-top: -20px;
-    }
-
-    .back_today {
-        width: 70px;
-        height: 40px;
-        display: flex;
-        text-align: center;
-        align-items: center;
-        padding: 25px;
-        margin-right: -50px;
-    }
-
-    .goto {
-        margin-top: -50px !important;
-    }
-}
-
-@media (max-width: 895px) {
-    .top {
-        width: 100%;
-        height: 25vh;
-        min-width: none;
-        max-width: none;
-        display: flex;
-        flex-direction: column;
-        border-radius: 0px;
-        margin-top: 0px;
-        font-size: 10px;
-        -webkit-border-radius: 0px;
-        -moz-border-radius: 0px;
-        -ms-border-radius: 0px;
-        -o-border-radius: 0px;
-    }
-
-    .top1 {
-        width: 50%;
-        height: 50px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-
-    .top2 {
-        width: 50%;
-        height: 50px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin-top: 20px;
-        margin-bottom: -50px;
-    }
-
-    .dec_img {
-        width: 10%;
-        aspect-ratio: 1 / 1.37;
-        /*高度是寬度的1.37倍*/
-        max-width: none;
-        border-radius: 0px;
-        align-self: flex-start;
-        margin-top: -20px;
-    }
-
-    .back_today {
-        width: 70px;
-        height: 40px;
-        display: flex;
-        text-align: center;
-        align-items: center;
-        padding: 25px;
-        margin-right: -50px;
-    }
-
-    .goto {
-        margin-top: -50px;
-    }
 }
 
 .calendar {
@@ -358,114 +225,6 @@ body::before {
     margin-left: 30px;
     display: flex;
     flex-direction: column;
-}
-
-/* 當視窗寬度小於1259px，設置寬度 */
-@media (max-width: 1520px) {
-    .calendar {
-        width: calc(100% - 350px);
-        min-width: 628px;
-        margin: auto;
-        margin-top: 30px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .main_table {
-        width: 90%;
-        min-width: 600px;
-        aspect-ratio: 2 / 1.5 !important;
-        /* 寬度是高度的 2 倍 */
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(5px);
-        padding: 15px;
-        margin: 10px;
-        margin-top: 0px;
-        border-radius: 10px;
-        border: 0.1em solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .main_table table {
-        width: 100%;
-        aspect-ratio: 2 / 1.5 !important;
-        color: #28404A;
-        border-collapse: collapse;
-        border: 0;
-    }
-}
-
-/* 當視窗寬度小於1259px，設置寬度 */
-@media (max-width: 1259px) {
-    .calendar {
-        width: calc(100% - 350px);
-        min-width: 628px;
-        margin: auto;
-        margin-top: 30px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .main_table {
-        width: 90%;
-        min-width: 600px;
-        aspect-ratio: 2 / 1.8 !important;
-        /* 寬度是高度的 2 倍 */
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(5px);
-        padding: 15px;
-        margin: 10px;
-        margin-top: 0px;
-        border-radius: 10px;
-        border: 0.1em solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .main_table table {
-        width: 100%;
-        aspect-ratio: 2 / 1.8 !important;
-        color: #28404A;
-        border-collapse: collapse;
-        border: 0;
-    }
-}
-
-/* 當視窗寬度小於960px，設置寬度 */
-@media (max-width: 960px) {
-    .calendar {
-        width: calc(100% - 350px);
-        min-width: 628px;
-        margin: auto;
-        margin-top: 30px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .main_table {
-        width: 90%;
-        min-width: 600px;
-        aspect-ratio: 2 / 1.8;
-        /* 寬度是高度的 2 倍 */
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(5px);
-        padding: 15px;
-        margin: 10px;
-        margin-top: 0px;
-        border-radius: 10px;
-        border: 0.1em solid rgba(0, 0, 0, 0.1);
-        box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    /* 當視窗寬度小於768px，設置固定寬度630px */
-
-
-    .main_table table {
-        width: 100%;
-        aspect-ratio: 2 / 1.8;
-        color: #28404A;
-        border-collapse: collapse;
-        border: 0;
-    }
 }
 
 .main {
@@ -619,6 +378,239 @@ body::before {
     text-decoration: none;
 }
 
+@media (max-width: 1533px) {
+    .top {
+        font-size: 15px;
+    }
+    .calendar {
+        width: calc(100% - 350px);
+        min-width: 628px;
+        margin: auto;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main_table {
+        width: 90%;
+        min-width: 600px;
+        aspect-ratio: 2 / 1.5 !important;
+        /* 寬度是高度的 2 倍 */
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        padding: 15px;
+        margin: 10px;
+        margin-top: 0px;
+        border-radius: 10px;
+        border: 0.1em solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .main_table table {
+        width: 100%;
+        aspect-ratio: 2 / 1.5 !important;
+        color: #28404A;
+        border-collapse: collapse;
+        border: 0;
+    }
+}
+
+@media (max-width: 1355px) {
+    .top {
+        font-size: 13px;
+    }
+    
+}
+
+@media (max-width: 1259px) {
+    .top {
+        font-size: 11px;
+    }
+    .calendar {
+        width: calc(100% - 350px);
+        min-width: 628px;
+        margin: auto;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main_table {
+        width: 90%;
+        min-width: 600px;
+        aspect-ratio: 2 / 1.8 !important;
+        /* 寬度是高度的 2 倍 */
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        padding: 15px;
+        margin: 10px;
+        margin-top: 0px;
+        border-radius: 10px;
+        border: 0.1em solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .main_table table {
+        width: 100%;
+        aspect-ratio: 2 / 1.8 !important;
+        color: #28404A;
+        border-collapse: collapse;
+        border: 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .top {
+        width: 100% !important;
+        max-width: none;
+        max-height: 300px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 0px;
+        margin-top: 0px;
+        font-size: 10px;
+    }
+
+    .top1 {
+        width: 50% !important;
+        height: 50px !important;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .top2 {
+        width: 50% !important;
+        height: 50px !important;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .dec_img {
+        width: 15%;
+        aspect-ratio: 1 / 1.37;
+        /*高度是寬度的1.37倍*/
+        max-width: none;
+        border-radius: 0px !important;
+        align-self: flex-start;
+        margin-top: -80px;
+        order: 3;
+    }
+
+    .back_today {
+        width: 70px;
+        height: 40px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        padding: 25px;
+        margin-right: -50px;
+    }
+
+    .goto {
+        margin-top: 10px;
+    }
+
+    .calendar {
+        width: 100vw;
+        min-width: 400px;
+        margin: auto;
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main_table {
+        width: 98%;
+        min-width: 350px;
+        aspect-ratio: 2 / 1.8;
+        /* 寬度是高度的 2 倍 */
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        padding: 15px;
+        margin: 10px;
+        margin-top: 0px;
+        border-radius: 10px;
+        border: 0.1em solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .main_table table {
+        width: 100%;
+        min-width: 350px;
+        aspect-ratio: 2 / 1.8;
+        color: #28404A;
+        border-collapse: collapse;
+        border: 0;
+    }
+}
+
+@media (max-width: 895px) {
+    .top {
+        width: 100%;
+        max-width: none;
+        height: 270px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 0px;
+        margin-top: 0px;
+        font-size: 10px;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        -ms-border-radius: 0px;
+        -o-border-radius: 0px;
+    }
+
+    .top1 {
+        width: 50%;
+        height: 20%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .top2 {
+        width: 50%;
+        height: 20%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .dec_img {
+        width: 15%;
+        aspect-ratio: 1 / 1.37;
+        /*高度是寬度的1.37倍*/
+        max-width: none;
+        border-radius: 0px;
+        align-self: flex-start;
+        margin-top: -80px;
+        order: 3;
+    }
+
+    .back_today {
+        width: 70px;
+        height: 40px;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        padding: 25px;
+        margin-right: -40px;
+    }
+
+    .goto {
+        margin-top: 10px;
+    }
+
+    .goto form {
+        color: #28404A;
+        padding: 20px;
+        margin-top: 0px;
+    }
+}
 
 /* 平滑滾動效果 */
 html {
