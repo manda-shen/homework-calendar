@@ -181,7 +181,8 @@ body::before {
     opacity: 0;
     filter: brightness(1.1) contrast(1.0) drop-shadow(1px 5px 1px rgba(0, 0, 0, 0.2));
     transition: opacity 0.3s;
-    /* 添加過渡效果 */
+        /* 添加過渡效果 */
+    -webkit-filter: brightness(1.1) contrast(1.0) drop-shadow(1px 5px 1px rgba(0, 0, 0, 0.2));
 }
 
 .dec_img:hover::before {
@@ -572,9 +573,14 @@ body::before {
 .main_table td.selected {
     background-color: #6a8b97;
     color: white;
-    font-weight: bold;
+    font-weight: 500;
+
 }
 
+.main_table td.selected .holidays {
+    color: white;
+    font-weight: 300;
+}
 
 .per_day {
     width: 100%;

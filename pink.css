@@ -575,7 +575,13 @@ body::before {
 .main_table td.selected {
     background-color: #979797;
     color: white;
-    font-weight: bold;
+    font-weight: 500;
+
+}
+
+.main_table td.selected .holidays {
+    color: white;
+    font-weight: 300;
 }
 
 
@@ -648,7 +654,7 @@ details[open] {
 
 .box {
     width: 1368px;
-    background: rgba(250, 214, 214, 0.3);
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     border-radius: 25px;
     justify-self: center;

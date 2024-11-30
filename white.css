@@ -575,7 +575,13 @@ body::before {
 .main_table td.selected {
     background-color: #979797;
     color: white;
-    font-weight: bold;
+    font-weight: 500;
+
+}
+
+.main_table td.selected .holidays {
+    color: white;
+    font-weight: 300;
 }
 
 
