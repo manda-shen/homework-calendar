@@ -298,7 +298,7 @@ body::before {
 .main_table table {
     width: 100%;
     aspect-ratio: 2 / 1.1;
-    color: #464646;
+    color: #585858;
     border-collapse: collapse;
     border: 0;
 }
@@ -315,6 +315,7 @@ body::before {
     min-height: 50px;
     padding:0.2em 0.4em ;
     font-size: 1.4em;
+    font-weight: 600;
     border: 1px solid white;
     /* 設置儲存格之間的格線為白色 */
     border-left: 1px solid white;
@@ -743,7 +744,7 @@ td {
 }
 
 .weekend {
-    color: #79b471f5;
+    color: #71b2b4f5;
 }
 
 
