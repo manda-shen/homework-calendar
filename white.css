@@ -313,7 +313,7 @@ body::before {
     max-height: 80px;
     min-height: 50px;
     padding:0.2em 0.4em ;
-    font-size: 1.3em;
+    font-size: 1.4em;
     border: 1px solid rgb(216, 216, 216);
     /* 設置儲存格之間的格線為白色 */
     border-left: 1px solid rgb(216, 216, 216);
@@ -361,6 +361,8 @@ body::before {
 .week_mark td {
     height: 40px;
     text-align: center;
+    color: rgb(184, 184, 184);
+    font-weight: 600;
 }
 
 .main_table td:first-child {
@@ -859,7 +861,7 @@ td {
 }
 
 .grey-text {
-    color: #9EA6A8;
+    color: #bebebe;
 }
 
 .today {
