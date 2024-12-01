@@ -18,6 +18,23 @@ $theme = isset($_GET['theme']) ? $_GET['theme'] : 'style.css';
 <?php
 date_default_timezone_set("Asia/Taipei");
 
+// if(isset($_GET['year'])){
+//     $year=$_GET['year'];
+// }else{
+//     $year=date("Y");
+// }
+
+// if(isset($_GET['month'])){
+//     $month=$_GET['month'];
+// }else{
+//     $month=date("m");
+// }
+
+// if(isset($_GET['day'])){
+//     $day=$_GET['day'];
+// }else{
+//     $day=date("d");
+// }
 
 // 檢查是否有表單提交日期
 if (isset($_GET['goto']) && !empty($_GET['goto'])) {
@@ -51,7 +68,7 @@ if($month+1>12){
 }
 
 include("holiday.php");
-include("Lunar.php");
+include("lunar.php");
 $lunar = new Lunar();
 
 ?>
