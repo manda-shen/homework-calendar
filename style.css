@@ -347,6 +347,11 @@ body::before {
     font-weight: 300;
 }
 
+.main_table td.selected .lunar_date {
+    color: rgb(236, 236, 236);
+    font-weight: 300;
+}
+
 .per_day {
     position: relative;
     width: 100%;
@@ -473,7 +478,7 @@ body::before {
 
 @media (max-width: 991px) {
     .top {
-        width: 100% !important;
+        width: 100vw !important;
         max-width: none;
         max-height: 300px;
         display: flex;
@@ -539,6 +544,12 @@ body::before {
         flex-direction: column;
     }
 
+    .show_date {
+        width: 200px;
+        letter-spacing: 1px;
+    }
+    
+
     .main_table {
         width: 98%;
         min-width: 350px;
@@ -561,6 +572,24 @@ body::before {
         color: #28404A;
         border-collapse: collapse;
         border: 0;
+    }
+
+    .main td{
+        font-size: 12px !important;
+    }
+
+    .holidays {
+        color: #81563c;
+        font-size: 8px !important;
+    }
+    
+    .spDate-class {
+        color: #6B346F;
+        font-size: 8px !important;
+    }
+    
+    .lunar_date {
+        font-size: 8px !important;
     }
 }
 
@@ -626,7 +655,25 @@ body::before {
     }
 
     .theme_list {
-        font-size: 1.4em;
+        font-size: 1.2em;
+    }
+
+    .main td{
+        font-size: 20px;
+    }
+
+    .holidays {
+        color: #81563c;
+        font-size: 7px;
+    }
+    
+    .spDate-class {
+        color: #6B346F;
+        font-size: 7px;
+    }
+    
+    .lunar_date {
+        font-size: 7px;
     }
 }
 
