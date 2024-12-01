@@ -132,7 +132,7 @@ $lunar = new Lunar();
 
     <!-- 月份小按鈕 .last_next -->
     <div class="last_next">
-        <a href="calendar.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>">＜</a>
+        <a href="calendar.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>&theme=<?= $theme; ?>">＜</a>
     </div>
     <!-- .last_next結束 -->
     
@@ -209,7 +209,7 @@ $lunar = new Lunar();
 
     <!-- 月份小按鈕 .last_next -->
     <div class="last_next">
-        <a href="calendar.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>">＞</a>
+        <a href="calendar.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>&theme=<?= $theme; ?>">＞</a>
     </div>
     <!-- .last_next結束 -->
 
