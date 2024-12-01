@@ -561,6 +561,22 @@ body::before {
         border-collapse: collapse;
         border: 0;
     }
+
+    .main td{
+        font-size: 12px !important;
+    }
+
+    .holidays {
+        font-size: 8px !important;
+    }
+    
+    .spDate-class {
+        font-size: 8px !important;
+    }
+    
+    .lunar_date {
+        font-size: 8px !important;
+    }
 }
 
 @media (max-width: 895px) {
@@ -678,22 +694,6 @@ details[open] {
     /* 確保滾動時與頁面頂部保持距離 */
 }
 
-
-/* 當視窗寬度小於768px，設置固定寬度630px */
-@media (max-width: 1368px) {
-    .box {
-        width: 926px;
-    }
-}
-
-/* 當視窗寬度小於768px，設置固定寬度630px */
-@media (max-width: 960px) {
-    .box {
-        width: 720px;
-    }
-}
-
-
 table {
     color: #444444;
     border-collapse: collapse;
@@ -735,6 +735,121 @@ td {
 
 .weekend {
     color: #4d8a8ff5;
+}
+
+
+/* 當視窗寬度小於1368px，設置固定寬度926px */
+@media (max-width: 1368px) {
+    .box {
+        width: 926px;
+    }
+}
+
+/* 當視窗寬度小於960px，設置固定寬度720px */
+@media (max-width: 960px) {
+    .box {
+        width: 720px;
+    }
+
+    table {
+        font-size: 9px;
+    }
+    
+    tr,
+    td {
+        padding: 3px 5px;
+    }
+    
+    .per_month {
+        padding: 5px;
+        padding-top: 0px;
+        margin: 5px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 3px rgba(0, 0, 0, 0.1);
+}
+    
+    .month::after {
+        content: " 月";
+        font-size: 8px;
+    }
+    
+    .month {
+        margin-top: 5px;
+        margin-bottom: 2px;
+    }
+}
+
+
+/* 當視窗寬度小於767ppx，設置固定寬度527px */
+@media (max-width: 767px) {
+    .box {
+        width: 527px;
+    }
+
+    table {
+        font-size: 9px;
+    }
+    
+    tr,
+    td {
+        padding: 3px 5px;
+    }
+    
+    .per_month {
+        padding: 5px;
+        padding-top: 0px;
+        margin: 5px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 3px rgba(0, 0, 0, 0.1);
+}
+    
+    .month::after {
+        content: " 月";
+        font-size: 8px;
+    }
+    
+    .month {
+        margin-top: 5px;
+        margin-bottom: 2px;
+    }
+}
+
+/* 當視窗寬度小於767ppx，設置固定寬度527px */
+@media (max-width: 575px) {
+    .box {
+        width: 390px;
+        padding: 10px;
+    }
+
+    table {
+        font-size: 8px;
+    }
+    
+    tr,
+    td {
+        padding: 1px 3px;
+    }
+    
+    .per_month {
+        padding: 3px;
+        padding-top: 0px;
+        margin: 2px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 3px rgba(0, 0, 0, 0.1);
+}
+    
+    .month::after {
+        content: " 月";
+        font-size: 8px;
+    }
+    
+    .month {
+        margin-top: 4px;
+        margin-bottom: 2px;
+    }
 }
 
 .holidays {

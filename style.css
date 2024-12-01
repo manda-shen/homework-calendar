@@ -579,12 +579,10 @@ body::before {
     }
 
     .holidays {
-        color: #81563c;
         font-size: 8px !important;
     }
     
     .spDate-class {
-        color: #6B346F;
         font-size: 8px !important;
     }
     
@@ -727,21 +725,6 @@ details[open] {
 }
 
 
-/* 當視窗寬度小於768px，設置固定寬度630px */
-@media (max-width: 1368px) {
-    .box {
-        width: 926px;
-    }
-}
-
-/* 當視窗寬度小於768px，設置固定寬度630px */
-@media (max-width: 960px) {
-    .box {
-        width: 720px;
-    }
-}
-
-
 table {
     color: #28404A;
     border-collapse: collapse;
@@ -784,6 +767,122 @@ td {
 .weekend {
     color: #C46A1B;
 }
+
+
+/* 當視窗寬度小於1368px，設置固定寬度926px */
+@media (max-width: 1368px) {
+    .box {
+        width: 926px;
+    }
+}
+
+/* 當視窗寬度小於960px，設置固定寬度720px */
+@media (max-width: 960px) {
+    .box {
+        width: 720px;
+    }
+
+    table {
+        font-size: 9px;
+    }
+    
+    tr,
+    td {
+        padding: 3px 5px;
+    }
+    
+    .per_month {
+        padding: 5px;
+        padding-top: 0px;
+        margin: 5px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 3px rgba(0, 0, 0, 0.1);
+}
+    
+    .month::after {
+        content: " 月";
+        font-size: 8px;
+    }
+    
+    .month {
+        margin-top: 5px;
+        margin-bottom: 2px;
+    }
+}
+
+
+/* 當視窗寬度小於767ppx，設置固定寬度527px */
+@media (max-width: 767px) {
+    .box {
+        width: 527px;
+    }
+
+    table {
+        font-size: 9px;
+    }
+    
+    tr,
+    td {
+        padding: 3px 5px;
+    }
+    
+    .per_month {
+        padding: 5px;
+        padding-top: 0px;
+        margin: 5px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 3px rgba(0, 0, 0, 0.1);
+}
+    
+    .month::after {
+        content: " 月";
+        font-size: 8px;
+    }
+    
+    .month {
+        margin-top: 5px;
+        margin-bottom: 2px;
+    }
+}
+
+/* 當視窗寬度小於575ppx，設置固定寬度390px */
+@media (max-width: 575px) {
+    .box {
+        width: 390px;
+        padding: 10px;
+    }
+
+    table {
+        font-size: 8px;
+    }
+    
+    tr,
+    td {
+        padding: 1px 3px;
+    }
+    
+    .per_month {
+        padding: 3px;
+        padding-top: 0px;
+        margin: 2px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0.7px 1px 3px rgba(0, 0, 0, 0.1);
+}
+    
+    .month::after {
+        content: " 月";
+        font-size: 8px;
+    }
+    
+    .month {
+        margin-top: 4px;
+        margin-bottom: 2px;
+    }
+}
+
 
 .holidays {
     color: #81563c;
