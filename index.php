@@ -175,7 +175,7 @@ $lunar = new Lunar();
                         $spDateClass = isset($spDate[date("Y-m-d", $start_stamp)]) ? 'spDate-class' : '';
                     
                         // 將所有類別合併到一起
-                        echo "<td class='$isToday $isWeekend $spDateClass $theMonth' data-date='$formattedDate'>";
+                        echo "<td class='$theMonth $isToday $isWeekend $spDateClass' data-date='$formattedDate'>";
                         echo "<a href='#'><div class='per_day'>";
                         echo date("j", $start_stamp);
 
