@@ -317,7 +317,7 @@ for($whichMonth=1;$whichMonth<=12;$whichMonth++){
 ?>
     <!-- 年曆中小月曆 .per_month -->
     <div class="per_month">
-        <a href="calendar.php?year=<?=$year;?>&month=<?=$whichMonth;?>" style="text-decoration: none; color: inherit;">
+        <a href="calendar.php?year=<?=$year;?>&month=<?=$whichMonth;?>&theme=<?= $theme; ?>" style="text-decoration: none; color: inherit;">
         <table>
             <div>
                 <h2 class="month">
