@@ -107,6 +107,9 @@ body::before {
     text-align: center;
 }
 
+.top_year :hover{
+    color: rgb(158, 124, 99);
+}
 
 .top_month {
     width: 55%;
